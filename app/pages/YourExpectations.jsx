@@ -1,7 +1,7 @@
 import React from 'react'
 import ScrollReveal from '@/components/ScrollReveal.jsx';
 import { GoArrowRight } from "react-icons/go";
-export default function YourExpectations() {
+export default function YourExpectations({textColor,bgColor}) {
   return (
     <section className=" flex flex-col py-20 md:py-50 items-center justify-center   text-white px-4 md:px-6  overflow-hidden">
                 
@@ -14,7 +14,9 @@ export default function YourExpectations() {
                            blurStrength={1}
                            baseRotation={0}
                          >
-                    <span className="px-4 py-1.5 rounded-full  bg-[#39002b] text-[#f401c0]  font-jb-mono   text-xs  md:text-base uppercase">
+                    <span className="px-4 py-1.5 rounded-full   font-jb-mono   text-xs  md:text-base uppercase"
+                    style={{color:textColor,backgroundColor:bgColor}}
+                    >
                      Expand your expectations
 
                     </span></ScrollReveal>
@@ -60,7 +62,8 @@ export default function YourExpectations() {
                            baseRotation={0}
                          >
                     {" "}
-                    <button className="group flex items-center gap-2 bg-[#f401c0] hover:bg-[#f619c6] transition-colors text-black py-1 md:py-2  pb-2 md:pb-4 px-2 md:px-4  rounded-full font-mulish font-bold text-base md:text-xl">
+                    <button className="group flex items-center gap-2  transition-colors text-black py-1 md:py-2  pb-2 md:pb-4 px-2 md:px-4  rounded-full font-mulish font-bold text-base md:text-xl"
+                    style={{backgroundColor:textColor}}>
                       <div className="flex justify-center   items-center gap-1">
                         Start Hiring
                         <GoArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

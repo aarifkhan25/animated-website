@@ -99,7 +99,7 @@ export default function Quesitons() {
             {/* Header / Question Area */}
             <button
               onClick={() => toggleAccordion(item.id)}
-              className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+              className="w-full cursor-pointer flex items-center justify-between p-6 text-left focus:outline-none"
             >
               <span className="text-base md:text-xl lg:text-3xl font-medium text-white">
                 {item.question}

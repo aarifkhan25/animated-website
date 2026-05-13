@@ -15,7 +15,7 @@ export default function Main() {
             <AnimatedContent
               distance={20}
               direction="vertical"
-              reverse
+           
               duration={0.8}
               ease="power3.out"
               initialOpacity={0}

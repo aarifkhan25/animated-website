@@ -63,7 +63,7 @@ const data=[{name:"160+",title:"Countries",delay:1},
               animateOpacity
               scale={1}
               threshold={0.2}
-              delay={0.5}
+              delay={0.2}
             >
               <div className="mb-8">
                 <span className="px-4 py-1.5 rounded-full   bg-[#40000b] text-[#ff0044] text-[8px] md:text-[12px] font-jb-mono font-bold uppercase">
