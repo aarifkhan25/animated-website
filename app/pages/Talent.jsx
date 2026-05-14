@@ -38,7 +38,7 @@ import Image from "next/image";
     },
   ];
 
-  const  clientInfo=[{name:"Anam",post:"co-founder & co-ceo",img:'/assets/clientImg/img.svg'},{name:"",post:"",img:'/assets/clientImg/img2.png'},{name:"",post:"",img:'/assets/clientImg/img3.svg'}]
+  const  clientInfo=[{name:"Anam",post:"co-founder & co-ceo",img:'/assets/clientImg/img.svg',video:"https://youtube.com/shorts/zxjfxrXfROc?si=WincBzNbmmDHQjfZ"},{name:"Jae",post:"founder & managing principal",img:'/assets/clientImg/img2.png',video:"https://player.vimeo.com/video/949215348"},{name:"Arianna",post:"Founder & ceo",img:'/assets/clientImg/img3.svg',video:"https://youtube.com/shorts/zxjfxrXfROc?si=WincBzNbmmDHQjfZ"}]
 export default function Talent({textColor,bgColor,title,heading,subheading,role}) {
   const targetRef = useRef(null);
   // 1. Vertical Scroll track
@@ -67,20 +67,34 @@ const handleResize = () => {
   }, [talent]);
 
   // player
-const [playing, setPlaying] = useState(true);
-  const [muted, setMuted] = useState(true);
-  const [played, setPlayed] = useState(0); // Progress percentage
-  const [isReady, setIsReady] = useState(false);
-  const playerRef = useRef(null);
+const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
 
-  // Handlers
-const handlePlayPause = () => {
-    // Agar video load nahi hui toh pause/play trigger mat karo
-    if (!isReady) return; 
-    setPlaying((prev) => !prev);
+const togglePlay = (e) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
   };
-    const handleMute = () => setMuted(!muted);
-  const handleProgress = (state) => setPlayed(state.played);
+
+  const toggleMute = () => {
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  const handleTimeUpdate = () => {
+    const duration = videoRef.current.duration;
+    const currentTime = videoRef.current.currentTime;
+    setProgress((currentTime / duration) * 100);
+  };
 
   return (
     <>
@@ -146,9 +160,9 @@ const handlePlayPause = () => {
       </section>
       <section
         ref={targetRef}
-        className="relative h-[200vh] -mt-10 sm:-mt-70 md:-mt-70 xl:-mt-15 2xl:-mt-50"
+        className="relative h-[200vh] -mt-10 sm:-mt-70 md:-mt-50 xl:-mt-15 2xl:-mt-50"
       >
-        <div className="sticky top-0 flex md:h-screen h-[50vh] items-center overflow-scroll scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      {role !=="client" ? (<div className="sticky top-0 flex md:h-screen h-[50vh] items-center overflow-scroll scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <motion.div
             style={{ x }}
             className="flex gap-5 md:gap-7 lg:gap-10 p-5 md:p-20 lg:p-32"
@@ -156,7 +170,7 @@ const handlePlayPause = () => {
             {visibleCards?.map((item, i) => (
               <div
                 key={i}
-                className={`relative ${role==="client"?"hidden":"block"} flex-shrink-0 w-[250px] h-[300px] md:w-[350px] md:h-[400px] lg:w-[450px] lg:h-[450px] overflow-hidden rounded-xl bg-[#141414] p-5 lg:p-8 font-sans shadow-2xl`}
+                className={`relative flex-shrink-0 w-[250px] h-[300px] md:w-[350px] md:h-[400px] lg:w-[450px] lg:h-[450px] overflow-hidden rounded-xl bg-[#141414] p-5 lg:p-8 font-sans shadow-2xl`}
               >
                 <div className="absolute inset-0 z-0">
                   <Image
@@ -208,53 +222,40 @@ const handlePlayPause = () => {
                 </div>
               </div>
             ))}
-            {clientInfo.map((curE,i)=>( 
-               <div key={i} className={`relative ${role==="client"?"block":"hidden"} w-full group max-w-[320px] sm:max-w-[400px] aspect-[9/16] bg-black rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/5`}>
+            </motion.div></div>)
+            
+: (<div className="sticky top-0 flex md:h-screen h-[50vh] items-center overflow-scroll scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <motion.div
+            style={{ x }}
+            className="flex gap-5 md:gap-7 lg:gap-10 p-5 mt-5 md:p-40 lg:p-62 lg:pl-100"
+          >
+            {clientInfo?.map((curE,i)=>( 
+          <div key={i} className="relative   flex-shrink-0 w-[300px] md:w-[380px] h-[600px] aspect-[9/16] bg-[#111] rounded-[2.5rem] overflow-hidden group">
         {/* --- YouTube Player Layer --- */}
-        <div className="absolute inset-0 h-full w-full pointer-events-none">
-          <ReactPlayer
-            ref={playerRef}
-            url="https://youtube.com/shorts/wYQNnhis01E?si=VKXkDQ0CX_wT2c-i" // Yahan apna link dalein
-            playing={playing}
-            muted={muted}
-            loop={true}
-            width="100%"
-            height="115%" // Thoda extra height taaki black bars na dikhein
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-            onProgress={handleProgress}
-           onReady={() => setIsReady(true)}
-            config={{
-              youtube: {
-                playerVars: {
-                  showinfo: 0,
-                  controls: 0,
-                  rel: 0,
-                  modestbranding: 1,
-                },
-              },
-            }}
-          />
-        </div>
-
+         {/* --- Video Layer --- */}
+     <div className="absolute inset-0 w-full h-full ">
+    <iframe
+      src={curE.video}
+      className="w-full h-full -ml-[100%] object-cover" // Aspect ratio fix karne ke liye width badhayi hai
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  </div>
         {/* Overlay to catch clicks and manage gradients */}
         <div
           className="absolute inset-0 z-10 cursor-pointer bg-gradient-to-b from-black/50 via-transparent to-black/70"
-          onClick={handlePlayPause}
+          
         ></div>
 
         {/* --- Top Info Card --- */}
         <div className="absolute top-4 group-hover:hidden transition duration-500  left-4 right-4 bg-[#021d2e]/90 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-white/10 z-20">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-medium text-white mb-0.5">
+              <h2 className="text-2xl sm:text-3xl font-mulish font-medium text-white mb-0.5">
                 {curE.name}
               </h2>
-              <p className="text-[9px] sm:text-[10px] font-bold text-[#009ded] uppercase tracking-[0.2em] mb-4">
+              <p className="text-[9px] sm:text-[10px] font-jb-mono font-bold text-[#009ded] uppercase tracking-[0.2em] mb-4">
                 {curE.post}
               </p>
             </div>
@@ -263,45 +264,40 @@ const handlePlayPause = () => {
             </div>
           </div>
           <div className="flex items-center ">
-           <Image width={500} height={500} src={curE.img} alt="log" className="w-30 h-15"/>
+           <Image width={500} height={500} src={curE.img} alt="log" className="w-30 h-15 "/>
           </div>
         </div>
 
         {/* --- Bottom Controls --- */}
-        <div className="absolute bottom-6 left-0 right-0 px-6 z-30">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePlayPause();
-              }}
-              className="text-white text-xl sm:text-2xl"
-            >
-              {playing ? <IoPause /> : <IoPlay />}
-            </button>
-
-            {/* Progress Bar */}
-            <div className="flex-grow h-1 bg-white/20 rounded-full relative overflow-hidden">
-              <div
-                className="absolute top-0 left-0 h-full bg-white transition-all duration-100"
-                style={{ width: `${played * 100}%` }}
-              ></div>
-            </div>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleMute();
-              }}
-              className="text-white text-lg sm:text-xl"
-            >
-              {muted ? <IoVolumeMute /> : <IoVolumeMedium />}
-            </button>
-          </div>
-        </div>
+          <div className="absolute bottom-6 left-0 right-0 px-6 z-20">
+                 <div className="flex items-center gap-4">
+                   
+                   {/* React Icons: Play/Pause */}
+                   <button onClick={togglePlay} className="text-white text-xl sm:text-2xl hover:scale-110 transition-transform">
+                     {isPlaying ? <IoPause /> : <IoPlay />}
+                   </button>
+       
+                   {/* Progress Bar */}
+                   <div className="flex-grow h-1 bg-white/20 rounded-full relative overflow-hidden">
+                     <div 
+                       className="absolute top-0 left-0 h-full bg-white transition-all duration-100" 
+                       style={{ width: `${progress}%` }}
+                     ></div>
+                   </div>
+       
+                   <span className="text-[10px] sm:text-xs font-medium text-white tabular-nums">
+                     00:{Math.floor(videoRef.current?.currentTime || 0).toString().padStart(2, '0')}
+                   </span>
+       
+                   {/* React Icons: Volume/Mute */}
+                   <button onClick={toggleMute} className="text-white text-lg sm:text-xl hover:opacity-80 transition-opacity">
+                     {isMuted ? <IoVolumeMute /> : <IoVolumeMedium />}
+                   </button>
+                 </div>
+               </div>
       </div>))     }
           </motion.div>
-        </div>
+        </div>)}
       </section>
     </>
   );

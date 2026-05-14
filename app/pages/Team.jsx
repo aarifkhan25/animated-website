@@ -13,7 +13,7 @@ const items = [
           Color: "#349760",
           borderColor: "#002611",
           borderColorHover: "#00b164",
-          move:'-120px'
+          move:'-170px'
         },
         {
           img: "/assets/img1.avif",
@@ -25,7 +25,7 @@ const items = [
           Color: "#a5d4f0",
           borderColor: "#002036",
           borderColorHover: "#008fd8",
-          move:'-80px'
+          move:'-100px'
         },
         {
           img: "/assets/img2.avif",
@@ -37,7 +37,7 @@ const items = [
           Color: "#edaaaf",
           borderColor: "#40000b",
           borderColorHover: "#de0042",
-          move:'0px'
+          move:'-10px'
         },
         {
           img: "/assets/img3.avif",
@@ -49,7 +49,7 @@ const items = [
           Color: "#c5c1f0",
           borderColor: "#1c143d",
           borderColorHover: "#6c53c2",
-          move:'-80px'
+          move:'-100px'
         },
         {
           img: "/assets/img5.avif",
@@ -61,7 +61,7 @@ const items = [
           Color: "#f7aae6",
           borderColor: "#3a002b",
           borderColorHover: "#f800c2",
-          move:'-120px'
+          move:'-170px'
         },
       ];
   return (

@@ -8,9 +8,8 @@ import StartHiring from "./pages/StartHiring.jsx";
 import FractionalTalent from "./pages/FractionalTalent.jsx";
 import ChooseUs from "./pages/ChooseUs.jsx";
 import YourExpectations from "./pages/YourExpectations.jsx";
-
 import Quesitons from "./pages/Quesitons.jsx";
-
+import Footer from './pages/Footer.jsx';
 export default function Home() {
   const { show, setShow } = useState(true);
 
@@ -188,7 +187,7 @@ export default function Home() {
         bgColor="#2a1205"
       ></YourExpectations>
 
-      <div className="px-40"></div>
+    <Footer></Footer>
     </>
   );
 }

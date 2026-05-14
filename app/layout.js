@@ -3,21 +3,23 @@ import "./globals.css";
 import { useState, useEffect } from "react";
 import FadeContent from "../components/FadeContent.jsx";
 import { FiAlignJustify } from "react-icons/fi";
-import { JetBrains_Mono } from 'next/font/google'
-import { Mulish } from 'next/font/google'
+import { JetBrains_Mono } from "next/font/google";
+import { Mulish } from "next/font/google";
+import AnimatedContent from "@/components/AnimatedContent.jsx";
+import Image from "next/image";
 
-const jbMono = JetBrains_Mono({ 
-  subsets: ['latin'],
-  variable: '--font-jb-mono' 
+
+const jbMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jb-mono",
 });
-const mulish = Mulish({ 
-
-  subsets: ['latin'],
-  variable: '--font-mulish'
-})
+const mulish = Mulish({
+  subsets: ["latin"],
+  variable: "--font-mulish",
+});
+const nav = ["Hire", "For Talent", "About", "Resources"];
 export default function RootLayout({ children }) {
   const [isScrolled, setIsScrolled] = useState(false);
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,54 +43,71 @@ export default function RootLayout({ children }) {
       ${isScrolled ? "bg-black/70 backdrop-blur-[4px]" : "bg-transparent"}`}
           >
             {/* Navigation Links */}
-            <FadeContent
-              blur={true}
-              duration={1000}
-              easing="ease-out"
-              initialOpacity={0}
+
+            <div
+              className={`hidden sm:text-base sm:flex items-center gap-5 lg:gap-10 transition-colors ${isScrolled ? "text-white" : "text-white/90"}`}
             >
-              <div
-                className={`hidden sm:text-xl sm:flex items-center gap-5 lg:gap-10 transition-colors ${isScrolled ? "text-white" : "text-white/90"}`}
+              <a
+                href="#"
+               
               >
-                <a
-                  href="#"
-                  className="hover:opacity-80 cursor-pointer hover:underline"
-                >
-                  LOGO
-                </a>
-                <a
-                  href="#about"
-                  className="hover:opacity-80 cursor-pointer text-base  hover:underline"
-                >
-                  Hire
-                </a>
-                <a
-                  href="#courses"
-                  className="hover:opacity-80 cursor-pointer text-base hover:underline"
-                >
-                  For Talent
-                </a>
-                <a
-                  href="#about"
-                  className="hover:opacity-80 cursor-pointer text-base hover:underline"
-                >
-                  About
-                </a>
-                <a
-                  href="#courses"
-                  className="hover:opacity-80 cursor-pointer text-base hover:underline"
-                >
-                  Resources
-                </a>
-              </div>
-              <div className="flex text-xl sm:hidden items-center"><FiAlignJustify className="w-6 h-6" /></div>
-            </FadeContent >
-            <FadeContent
-              blur={true}
-              duration={1000}
-              easing="ease-out"
+                <Image width={500} height={500} src="/assets/logo.svg" alt="logo" loading='lazy' className="hover:opacity-80 cursor-pointer w-8 h-8 lg:w-12 lg:h-12 " />
+              </a>
+
+              {nav?.map((item, i) => {
+                return (
+                  <a
+                    key={i}
+                    className="hover:opacity-80 cursor-pointer md:text-sm  lg:text-base font-mulish font-semibold "
+                  >
+                    <AnimatedContent
+                      distance={20}
+                      direction="vertical"
+                      reverse
+                      duration={1.5}
+                      ease="power3.out"
+                      initialOpacity={0}
+                      animateOpacity
+                      scale={1}
+                      threshold={0.2}
+                      delay={3}
+                    >
+                      <FadeContent
+                        blur={true}
+                        duration={1.5}
+                        easing="ease-in"
+                        initialOpacity={0}
+                        delay={3}
+                      >
+                        {item}
+                      </FadeContent>
+                    </AnimatedContent>{" "}
+                  </a>
+                );
+              })}
+            </div>
+            <div className="flex text-xl sm:hidden items-center">
+              <FiAlignJustify className="w-6 h-6" />
+            </div>
+
+            <AnimatedContent
+              distance={20}
+              direction="vertical"
+              reverse
+              duration={1.5}
+              ease="power3.out"
               initialOpacity={0}
-            >
+              animateOpacity
+              scale={1}
+              threshold={0.2}
+              delay={3}
+            > <FadeContent
+                            blur={true}
+                            duration={1.5}
+                            easing="ease-in"
+                            initialOpacity={0}
+                            delay={3}
+                          >
               <div>
                 <div className="flex justify-center gap-3 lg:gap-8">
                   <a
@@ -99,17 +118,19 @@ export default function RootLayout({ children }) {
                   </a>
                   <a
                     href="#courses"
-                    className="hidden sm:flex bg-[#ffffff] hover:bg-white cursor-pointer text-black font-semibold  px-4 py-1 pb-3 rounded-full text-base transition duration-150"
+                    className="hidden sm:flex bg-[#ffffff] hover:bg-white cursor-pointer text-black font-bold  px-4 py-1 pb-3 rounded-full text-base transition duration-150"
                   >
                     Start Hiring Talents
                   </a>
                 </div>
-              </div>
-            </FadeContent>
+              </div></FadeContent>
+            </AnimatedContent>
           </nav>
 
           {children}
         </div>
+
+
       </body>
     </html>
   );

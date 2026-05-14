@@ -272,7 +272,7 @@ export default function FractionalTalent({
               className="bg-[#141414] rounded-xl p-8 lg:p-12 border border-white/5 flex flex-col h-full"
             >
               {/* Title from image_46fc63.png */}
-              <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-semibold leading-[1.2] mb-3 md:mb-5 lg:mb-10 max-w-[90%]">
+              <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-mulish font-semibold leading-[1.2] mb-3 md:mb-5 lg:mb-10 max-w-[90%]">
                 {section.title}
               </h2>
 
@@ -281,7 +281,7 @@ export default function FractionalTalent({
                 {section.roles.map((role, idx) => (
                   <li
                     key={idx}
-                    className="text-[#f5f5f5] cursor-pointer text-xs  md:text-base lg:text-lg font-medium opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
+                    className="text-[#f5f5f5] cursor-pointer  font-mulish text-xs  md:text-base lg:text-lg font-medium opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
                   >
                     {role}
                   </li>

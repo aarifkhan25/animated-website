@@ -16,13 +16,13 @@ export default function Main() {
               distance={20}
               direction="vertical"
            
-              duration={0.8}
+              duration={1.5}
               ease="power3.out"
               initialOpacity={0}
               animateOpacity
               scale={1}
               threshold={0.2}
-              delay={0.5}
+              delay={3}
             >
               <div className="mt-10 md:mt-25 mb-10 md:mb-0">
                 <span className="px-4 py-1.5 rounded-full  bg-sky-500/10 text-[#009ded]  font-jb-mono   text-xs  md:text-base uppercase">
@@ -32,43 +32,26 @@ export default function Main() {
             </AnimatedContent>
     
             {/* Main Heading */}
+              <FadeContent
+                blur={true}
+                duration={1.5}
+                delay={3}
+                easing="ease-out"
+                initialOpacity={0}
+              >
             <div className=" text-center  ">
             
-              <SplitText
-                text="Hire High"
-                className="text-5xl md:text-8xl lg:text-9xl/32  tracking-wide leading-[1.1] "
-                delay={50}
-                duration={1.5}
-                ease="power3.out"
-                splitType="lines"
-                from={{ opacity: 0, y: 40 }}
-                to={{ opacity: 1, y: 0 }}
-                threshold={0.1}
-                rootMargin="-100px"
-                textAlign="center"
-              />
-              <SplitText
-                text="quality humans"
-                className="text-[47px] md:text-8xl lg:text-9xl/32  tracking-wide leading-[1.1] mb-9 font-mulish"
-                delay={50}
-                duration={3}
-                ease="power3.out"
-                splitType="lines"
-                from={{ opacity: 0, y: 40 }}
-                to={{ opacity: 1, y: 0 }}
-                threshold={0.1}
-                rootMargin="-100px"
-                textAlign="center"
-              />
+              <h1 className="text-[47px] md:text-8xl lg:text-9xl/32  tracking-wide leading-[1.1] mb-9 font-mulish ">Hire  Hight <br/> quality humans</h1>
             </div>
-    
+    </FadeContent>
             {/* Subtext */}
             <div className=" text-center max-w-3xl ">
               <FadeContent
                 blur={true}
-                duration={1500}
+                duration={1.5}
                 easing="ease-in"
                 initialOpacity={0}
+                delay={3}
               >
                 <p className="text-white text-base md:text-2xl font-mulish">
                   The best marketing, design, ops, and engineering operators in the
@@ -82,7 +65,8 @@ export default function Main() {
             <div className=" mt-7">
               <FadeContent
                 blur={true}
-                duration={1000}
+                duration={1.5}
+                delay={3}
                 easing="ease-out"
                 initialOpacity={0}
               >
