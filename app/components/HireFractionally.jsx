@@ -45,7 +45,7 @@ const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
 ]
 const data=[{name:"160+",title:"Countries",delay:1},
     {name:"4.6/5",title:"Rating on G2",delay:2},
-    {name:"1st",title:"Product Hunt ",delay:3}
+    {name:"1st",title:"Product Hunt Approved ",delay:3}
 ]
   return (
     <><section className="w-full  text-white py-0 px-10 md:px-20 lg:px-32">
@@ -149,7 +149,7 @@ const data=[{name:"160+",title:"Countries",delay:1},
 
         <div  className="md:w-[200px] lg:w-[320px] grid gap-3 h-auto rounded-xl bg-[#141414] p-3  shadow-2xl">
 <h2 className="font-jb-mono text-xl md:text-2xl lg:text-5xl">{curE.name}</h2>
-<p className="text-base md:text-lg lg:text-xl font-mulish font-semibold">{curE.title}</p>
+<p className="text-sm md:text-base lg:text-gl font-mulish ">{curE.title}</p>
         </div></FadeContent></span>
             })
         }

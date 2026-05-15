@@ -9,7 +9,7 @@ import FadeContent from "@/components/FadeContent.jsx";
 
 export default function Main() {
   return (
-     <section className=" flex flex-col gap-8 sm:gap-10 lg:gap-0 items-center justify-center min-h-screen  text-white px-4 md:px-6 py-5 overflow-hidden">
+     <section className=" flex flex-col gap-8 sm:gap-10 lg:gap-0 items-center justify-center w-full  text-white py-10 px-4 md:px-6 md:py-5 overflow-hidden">
             
             {/* Top Badge */}
             <AnimatedContent

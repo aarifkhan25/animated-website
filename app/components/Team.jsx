@@ -66,8 +66,15 @@ const items = [
       ];
   return (
    <section className=" bg-[url(/assets/talentbg.png)] gradient-overlay bg-cover bg-no-repeat  w-full  grid items-center   justify-center gap-0 ">
-    <div className="p-3"> 
-     <p className="text-center  text-white text-sm md:text-lg font-mulish font-sarif">Backed by <span className="text-black bg-white px-1">Y</span> Combinator</p></div>
+    <div className="flex justify-center"> 
+       <Image
+                  src="/assets/Y.svg"
+                  width={500}
+                  height={500}
+                  alt="Y"
+                  loading="lazy"
+                  className="w-[150px] md:w-[220px]  "
+                /></div>
         <div className="flex   gap-10 justify-center mb-5 md:mb-15 ">
           {items?.map((item, i) => {
             return (
@@ -110,7 +117,7 @@ const items = [
                   width={500}
                   height={500}
                   alt={item.title}
-                  loading="lazy"
+                  loading="lazy" 
                   className="w-full h-full object-cover rounded-md group-hover:scale-110 transition-transform duration-200"
                 />
 

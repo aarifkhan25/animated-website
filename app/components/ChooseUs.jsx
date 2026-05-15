@@ -5,6 +5,9 @@ import AnimatedContent from "@/components/AnimatedContent.jsx";
 import FadeContent  from "@/components/FadeContent.jsx";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { TbContract } from "react-icons/tb";
+import { FaBlenderPhone } from "react-icons/fa";
 import Image from "next/image";
 const sections = [
     { id: 'quick-view', title: 'Quick view', content: "Jeremy applied for the role of Graphic Designer with a proposed compensation of $75/hr." },
@@ -12,6 +15,11 @@ const sections = [
     { id: 'talent-profile', title: 'Talent Profile', content: "Detailed resume, portfolio links, and skill assessments." },
     { id: 'job-description', title: 'Job Description', content: "Full breakdown of roles and responsibilities for this position." }
   ];
+
+
+  const fractionalHringData=[{icon:<FaRegCalendarAlt  className="w-4 h-4 md:w-6 md:h-6" />,title:'Automatic Scheduling',des:"Book time directly on linked calenders. Reschedule at will.",delay:1},
+    {icon:<TbContract className="w-4 h-4 md:w-6 md:h-6" />,title:'Flexible Contracts',des:"Choose from hourly and monthly options.  down at any time.",delay:2},
+    {icon:<FaBlenderPhone className="w-4 h-4 md:w-6 md:h-6" />,title:'Painless Invoicing',des:"Schedule your contractors invoices, pay via ACH or CC with Stri",delay:3}]
 export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
 
     const [openSection, setOpenSection] = useState('quick-view');
@@ -63,10 +71,10 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
              
             </ScrollReveal>
           </div>
-          <FadeContent blur={true} duration={1000} delay={0.5} easing="ease-out" initialOpacity={0}>
+          <FadeContent blur={true} duration={0.5} delay={0.5} easing="ease-out" initialOpacity={0}>
    {textColor !=="#ff4d00"?   <div className="flex flex-col md:flex-row bg-[#1A1141] w-full md:h-[350px] lg:h-[470px] w-full rounded-xl overflow-hidden shadow-2xl">
         {/* Left Side (Text Content) */}
-        <div className="w-full md:w-1/2 p-5 md:p-8 lg:p-12  flex flex-col justify-center">
+        <div className="w-full md:w-1/2 p-5 md:p-8 lg:p-12  flex flex-col justify-center order-2 md:order-1">
           <p className="text-xs md:text-sm lg:text-base font-semibold  uppercase font-jb-mono tracking-wider mb-6"
           style={{color:textColor}}
           >
@@ -83,7 +91,7 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
         </div>
 
         {/* Right Side (Image Content) */}
-        <div className="w-full md:w-1/2 p-3 md:p-5 lg:p-10  bg-[#D6D0F8] rounded-xl flex items-center justify-center">
+        <div className="w-full md:w-1/2 p-5 md:p-9 lg:p-12  bg-[#D6D0F8] rounded-xl flex items-center justify-center order-1 md:order-2">
 
             <Image
               src="/assets/story.png"
@@ -94,10 +102,12 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
             />
           
         </div>
-      </div>:<div className=" w-full h-[500px] flex flex-col lg:flex-row  items-cente gap-3 md:gap-5 lg:gap-10 rounded-xl bg-[#141414]  ">
+      </div>: 
+      <div className="grid gap-10 "> 
+        <div className=" w-full h-[500px] flex flex-col lg:flex-row  items-cente gap-3 md:gap-5 lg:gap-10 rounded-xl bg-[#141414]  ">
               
               {/* Left Side: The "Mockup" Card */}
-              <div className="w-full h-full lg:w-1/2 relative aspect-[4/3] bg-[#1a1a1a] rounded-xl lg:rounded-l-xl border border-white/10 overflow-hidden shadow-2xl">
+              <div className="w-full h-full lg:w-1/2 relative aspect-[4/3] bg-[#1a1a1a] rounded-b-xl md:rounded-t-xl lg:rounded-l-xl overflow-hidden shadow-2xl order-2 md:order-1">
                 <div className="absolute inset-0 flex">
                   {/* Image Part */}
                   <div className="w-1/4 h-full">
@@ -111,7 +121,7 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
                   {/* Interface Part */}
                   <div className="w-full h-full bg-white p-6 flex flex-col">
                     <div className="flex justify-between items-center mb-8">
-                      <h3 className="text-xl font-bold text-black">Interview Co-Pilot</h3>
+                      <h3 className="text-base md:text-xl font-bold text-black">Interview Co-Pilot</h3>
                       <div className="p-1 border border-black/10 rounded-md">
                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                       </div>
@@ -122,7 +132,7 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
                         <div key={sec.id} className="border-b border-black/5 pb-2">
                           <button 
                             onClick={() => setOpenSection(sec.id)}
-                            className="w-full cursor-pointer flex justify-between items-center py-2 text-left text-sm font-bold text-black"
+                            className="w-full cursor-pointer flex justify-between items-center py-2 text-left text-[10px] md:text-sm font-bold text-black"
                           >
                             {sec.title}
                             <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 transition-transform ${openSection === sec.id ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -136,15 +146,10 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
                                 exit={{ height: 0, opacity: 0 }}
                                 className="overflow-hidden"
                               >
-                                <p className="text-[10px] text-gray-500 mb-3 leading-relaxed">
+                                <p className="text-[6px] md:text-[10px] text-gray-500 mb-3 leading-relaxed">
                                   {sec.content}
                                 </p>
-                                {sec.id === 'quick-view' && (
-                                  <div className="flex gap-2">
-                                    <button className="text-[10px] bg-gray-100 px-3 py-1.5 rounded font-bold border border-black/5">Send Message</button>
-                                    <button className="text-[10px] bg-gray-100 px-3 py-1.5 rounded font-bold border border-black/5">View Contract</button>
-                                  </div>
-                                )}
+                             
                               </motion.div>
                             )}
                           </AnimatePresence>
@@ -156,7 +161,7 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
               </div>
       
               {/* Right Side: Text Content */}
-              <div className="w-full lg:mt-[10%] lg:w-1/2 p-3 md:p-5">
+              <div className="w-full lg:mt-[10%] lg:w-1/2 p-3 md:p-5 order-1 md:order-2">
                 <span className="bg-[#2a1205] text-[#ff4d00] text-[10px] font-jb-mono font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full border border-[#ff4d00]/20 inline-block mb-8">
                   Every Step of Hiring
                 </span>
@@ -170,7 +175,45 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
                 </p>
               </div>
       
-            </div>}
+            </div>
+        <div className="   grid  md:grid-cols-[repeat(3,1fr)] grid-rows-[1fr] gap-1 md:gap-3 ">
+            {fractionalHringData?.map((curE, i) => {
+              return (
+                
+                  <FadeContent
+                    blur={true}
+                    duration={1000}
+                    delay={curE.delay}
+                    easing="ease-out"
+                    initialOpacity={0}
+                    key={i}
+                  >
+                    <div  className="w-full flex gap-2 lg:gap-3 h-auto rounded-xl bg-[#141414] p-3 md:p-5  shadow-2xl">
+                      <div>
+                        <span >{curE.icon}</span>
+                      </div>
+                      <div className="grid gap-3">
+ <h2 className="font-mulish text-xs md:text-sm lg:text-base">
+                        {curE.title}
+                      </h2>
+                   <p className={` text-[10px] md:text-xs lg:text-sm font-mulish font-normal `}>
+                        {curE.des}
+                      </p>
+                      </div>
+                    
+                    </div>
+                  </FadeContent>
+                
+              );
+            })}
+          </div></div>
+            
+
+            
+            
+            
+            
+            }
 </FadeContent>
 
           

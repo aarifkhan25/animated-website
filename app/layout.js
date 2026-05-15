@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
             {/* Navigation Links */}
 
             <div
-              className={`hidden sm:text-base sm:flex items-center gap-5 lg:gap-10 transition-colors ${isScrolled ? "text-white" : "text-white/90"}`}
+              className={` sm:text-base flex items-center gap-5 lg:gap-10 transition-colors ${isScrolled ? "text-white" : "text-white/90"}`}
             >
               <a
                 href="#"
@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
                 return (
                   <a
                     key={i}
-                    className="hover:opacity-80 cursor-pointer md:text-sm  lg:text-base font-mulish font-semibold "
+                    className="hidden sm:block hover:opacity-80 cursor-pointer md:text-sm  lg:text-base font-mulish font-semibold "
                   >
                     <AnimatedContent
                       distance={20}
@@ -86,9 +86,7 @@ export default function RootLayout({ children }) {
                 );
               })}
             </div>
-            <div className="flex text-xl sm:hidden items-center">
-              <FiAlignJustify className="w-6 h-6" />
-            </div>
+            
 
             <AnimatedContent
               distance={20}
@@ -122,6 +120,9 @@ export default function RootLayout({ children }) {
                   >
                     Start Hiring Talents
                   </a>
+                  <div className="flex text-xl sm:hidden items-center">
+              <FiAlignJustify className="w-6 h-6" />
+            </div>
                 </div>
               </div></FadeContent>
             </AnimatedContent>

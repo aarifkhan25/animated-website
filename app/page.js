@@ -1,15 +1,15 @@
 "use client";
 import { useState, useRef } from "react";
-import Main from "./pages/Main.jsx";
-import Team from "./pages/Team.jsx";
-import Company from "./pages/Company.jsx";
-import Talent from "./pages/Talent.jsx";
-import StartHiring from "./pages/StartHiring.jsx";
-import FractionalTalent from "./pages/FractionalTalent.jsx";
-import ChooseUs from "./pages/ChooseUs.jsx";
-import YourExpectations from "./pages/YourExpectations.jsx";
-import Quesitons from "./pages/Quesitons.jsx";
-import Footer from './pages/Footer.jsx';
+import Main from "./components/Main.jsx";
+import Team from "./components/Team.jsx";
+import Company from "./components/Company.jsx";
+import Talent from "./components/Talent.jsx";
+import StartHiring from "./components/StartHiring.jsx";
+import FractionalTalent from "./components/FractionalTalent.jsx";
+import ChooseUs from "./components/ChooseUs.jsx";
+import YourExpectations from "./components/YourExpectations.jsx";
+import Quesitons from "./components/Quesitons.jsx";
+import Footer from './components/Footer.jsx';
 export default function Home() {
   const { show, setShow } = useState(true);
 
@@ -85,7 +85,7 @@ export default function Home() {
         title="The fastest way to hire fractionally"
         heading={
           <>
-            {" "}
+           
             Hiring fractionally is <br />
             easier than you think
           </>

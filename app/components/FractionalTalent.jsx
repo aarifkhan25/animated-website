@@ -5,7 +5,7 @@ import ScrollReveal from "@/components/ScrollReveal.jsx";
 import AnimatedContent from "@/components/AnimatedContent.jsx";
 import FadeContent from "@/components/FadeContent";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-
+import Image from "next/image";
 const talent = [
   {
     title: "  Fractional designers",
@@ -82,7 +82,7 @@ export default function FractionalTalent({
   const data = [
     { name: "160+", title: "Countries", delay: 1 },
     { name: "4.6/5", title: "Rating on G2", delay: 2 },
-    { name: "1st", title: "Product Hunt ", delay: 3 },
+    { name: "1st", title: "Product Hunt Approved", delay: 3,img:'/assets/product1.svg' },
   ];
 
   const [visibleCards, setVisibleCards] = useState([]);
@@ -149,7 +149,7 @@ export default function FractionalTalent({
                 {heading}
               </h2>
               {/* Subtext */}
-              <div className="flex justify-between gap-5 items-center">
+              <div className="grid md:flex justify-between gap-5 items-center">
                 <div>
                   <p className="max-w-xl text-white text-xs md:text-sm lg:text-base font-mulish leading-relaxed">
                     {subheading}
@@ -294,7 +294,7 @@ export default function FractionalTalent({
 
       <>
         {textColor === "#ff0044" ? (
-          <div className="md:px-10 lg:px-32 pb-10 -mt-40  flex gap-1 md:gap-3 lg:gap-5 justify-center items-center">
+          <div className="md:px-10 lg:px-32 pb-10 -mt-40  flex flex-grow gap-1 md:gap-3 lg:gap-5 justify-center items-center">
             {data?.map((curE, i) => {
               return (
                 <span key={i}>
@@ -306,10 +306,17 @@ export default function FractionalTalent({
                     initialOpacity={0}
                   >
                     <div className="md:w-[200px] lg:w-[320px] grid gap-3 h-auto rounded-xl bg-[#141414] p-3  shadow-2xl">
-                      <h2 className="font-jb-mono text-xl md:text-2xl lg:text-5xl">
+                    {curE.delay !==3 ?  <h2 className="font-jb-mono text-xl md:text-2xl lg:text-5xl">
                         {curE.name}
-                      </h2>
-                      <p className="text-base md:text-lg lg:text-xl font-mulish font-semibold">
+                      </h2>: <Image
+                                        src={curE.img}
+                                        width={500}
+                                        height={500}
+                                        alt="1st Product"
+                                        loading="lazy"
+                                        className={` w-[110px] md:w-[200px]  `}
+                                      />}
+                   <p className={` text-sm md:text-base lg:text-lg font-mulish `}>
                         {curE.title}
                       </p>
                     </div>
