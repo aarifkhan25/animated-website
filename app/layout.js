@@ -7,7 +7,7 @@ import { JetBrains_Mono } from "next/font/google";
 import { Mulish } from "next/font/google";
 import AnimatedContent from "@/components/AnimatedContent.jsx";
 import Image from "next/image";
-
+import { MdOutlineClose } from "react-icons/md";
 
 const jbMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -20,7 +20,7 @@ const mulish = Mulish({
 const nav = ["Hire", "For Talent", "About", "Resources"];
 export default function RootLayout({ children }) {
   const [isScrolled, setIsScrolled] = useState(false);
-
+const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -33,6 +33,12 @@ export default function RootLayout({ children }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+    const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);// Close the mobile menu after clicking a link
+  }
   return (
     <html lang="en">
       <body className={`${jbMono.variable} ${mulish.variable} `}>
@@ -51,7 +57,7 @@ export default function RootLayout({ children }) {
                 href="#"
                
               >
-                <Image width={500} height={500} src="/assets/logo.svg" alt="logo" loading='lazy' className="hover:opacity-80 cursor-pointer w-8 h-8 lg:w-12 lg:h-12 " />
+                <Image width={500} height={500} src="/assets/logo.svg" alt="logo" loading='lazy' className="hover:opacity-80 cursor-pointer w-8 h-8 lg:w-11 lg:h-11 " />
               </a>
 
               {nav?.map((item, i) => {
@@ -88,6 +94,7 @@ export default function RootLayout({ children }) {
             </div>
             
 
+              <div className="flex gap-3">
             <AnimatedContent
               distance={20}
               direction="vertical"
@@ -105,9 +112,10 @@ export default function RootLayout({ children }) {
                             easing="ease-in"
                             initialOpacity={0}
                             delay={3}
-                          >
-              <div>
-                <div className="flex justify-center gap-3 lg:gap-8">
+                            >
+                            <div className="flex justify-center gap-3 lg:gap-8">
+
+
                   <a
                     href="#courses"
                     className="bg-[#1a1a1a] hover:bg-[#242323] cursor-pointer text-white font-bold  px-4 py-1 pb-3 rounded-full text-sm lg:text-base transition duration-150"
@@ -120,13 +128,35 @@ export default function RootLayout({ children }) {
                   >
                     Start Hiring Talents
                   </a>
-                  <div className="flex text-xl sm:hidden items-center">
-              <FiAlignJustify className="w-6 h-6" />
-            </div>
+
+                    </div>
+                    </FadeContent></AnimatedContent>
+
+                  <div className="flex text-xl sm:hidden items-center cursor-pointer hove:bg-gray-100 hover:rounded-xl ">
+                    {isMobileMenuOpen ? (
+                      <MdOutlineClose onClick={toggleMobileMenu} className="w-6 h-6" />
+                    ) : (
+                      <FiAlignJustify onClick={toggleMobileMenu} className="w-6 h-6" />
+                    )}
+
                 </div>
-              </div></FadeContent>
-            </AnimatedContent>
-          </nav>
+
+  </div>
+   </nav>
+
+
+
+  <div className={`sm:hidden  h-screen bg-black/70 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
+<div className="grid mt-15 cursor-pointer">
+ {
+  nav?.map((item,i)=>{
+    return(<a key={i} className="p-3 hover:opacity-80 text-white w-full text-sm font-mulish hover:bg[#333333]">{item}</a>)
+  })
+ }
+</div>
+
+  </div>
+
 
           {children}
         </div>

@@ -53,7 +53,7 @@ export default function Talent({
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]);
 
   const [visibleCards, setVisibleCards] = useState([]);
   const handleResize = () => {

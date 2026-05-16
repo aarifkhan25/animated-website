@@ -178,7 +178,7 @@ export default function FractionalTalent({
        <div className="sticky top-0 h-screen w-full flex flex-col justify-start pt-16 md:pt-24 overflow-hidden">
         <motion.div
       style={{ x }}
-      className="flex gap-5 md:gap-7 lg:gap-10 px-5 py-10 md:px-20 md:py-12 lg:px-32 lg:py-16"
+      className="flex gap-5 md:gap-7 lg:gap-10 px-5 py-10 md:px-20 md:py-12 lg:px-32 lg:py-16 "
     >
             {bgColor !== "#1c143d"
               ? visibleCards?.map((item, i) => (
