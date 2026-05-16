@@ -17,14 +17,14 @@ const sections = [
   ];
 
 
-  const fractionalHringData=[{icon:<FaRegCalendarAlt  className="w-4 h-4 md:w-6 md:h-6" />,title:'Automatic Scheduling',des:"Book time directly on linked calenders. Reschedule at will.",delay:1},
-    {icon:<TbContract className="w-4 h-4 md:w-6 md:h-6" />,title:'Flexible Contracts',des:"Choose from hourly and monthly options.  down at any time.",delay:2},
-    {icon:<FaBlenderPhone className="w-4 h-4 md:w-6 md:h-6" />,title:'Painless Invoicing',des:"Schedule your contractors invoices, pay via ACH or CC with Stri",delay:3}]
+  const fractionalHringData=[{icon:<FaRegCalendarAlt  className="w-4 h-4 md:w-6 md:h-6" />,title:'Automatic Scheduling',des:"Book time directly on linked calenders. Reschedule at will.",delay:0.5},
+    {icon:<TbContract className="w-4 h-4 md:w-6 md:h-6" />,title:'Flexible Contracts',des:"Choose from hourly and monthly options.  down at any time.",delay:1},
+    {icon:<FaBlenderPhone className="w-4 h-4 md:w-6 md:h-6" />,title:'Painless Invoicing',des:"Schedule your contractors invoices, pay via ACH or CC with Stri",delay:1.5}]
 export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
 
     const [openSection, setOpenSection] = useState('quick-view');
   return (
-  <section className="w-full md:grid gap-5 md:gap-10 text-white py-10 md:pb-10 px-5 md:px-10  lg:px-38">
+  <section className="w-full md:grid gap-5 md:gap-10 text-white  py-10 md:py-20 px-5 md:px-10  lg:px-38">
         <div className="w-full mx-auto grid  justify-center items-center  ">
          
             {/* Orange Badge */}
@@ -176,37 +176,37 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
               </div>
       
             </div>
-        <div className="   grid  md:grid-cols-[repeat(3,1fr)] grid-rows-[1fr] gap-1 md:gap-3 ">
-            {fractionalHringData?.map((curE, i) => {
-              return (
-                
-                  <FadeContent
-                    blur={true}
-                    duration={1000}
-                    delay={curE.delay}
-                    easing="ease-out"
-                    initialOpacity={0}
-                    key={i}
-                  >
-                    <div  className="w-full flex gap-2 lg:gap-3 h-auto rounded-xl bg-[#141414] p-3 md:p-5  shadow-2xl">
-                      <div>
-                        <span >{curE.icon}</span>
-                      </div>
-                      <div className="grid gap-3">
- <h2 className="font-mulish text-xs md:text-sm lg:text-base">
-                        {curE.title}
-                      </h2>
-                   <p className={` text-[10px] md:text-xs lg:text-sm font-mulish font-normal `}>
-                        {curE.des}
-                      </p>
-                      </div>
-                    
-                    </div>
-                  </FadeContent>
-                
-              );
-            })}
-          </div></div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 items-stretch">
+  {fractionalHringData?.map((curE, i) => {
+    return (
+      <FadeContent
+        blur={true}
+        duration={1000}
+        delay={curE.delay}
+        easing="ease-out"
+        initialOpacity={0}
+        key={i}
+        // h-full ensure karta hai ki FadeContent ka wrapper poori height le
+        className="h-full"
+      >
+        <div className="w-full h-full flex gap-2 lg:gap-3 rounded-xl bg-[#141414] p-3 md:p-4 lg:p-5 shadow-2xl border border-white/5">
+          <div className="flex-shrink-0 ">
+            <span>{curE.icon}</span>
+          </div>
+          
+          <div className="flex flex-col gap-1 md:gap-3">
+            <h2 className="font-mulish text-[10px] md:text-sm lg:text-base font-bold text-white leading-tight">
+              {curE.title}
+            </h2>
+            <p className="font-mulish text-[9px] md:text-xs lg:text-sm font-normal text-gray-400 leading-snug">
+              {curE.des}
+            </p>
+          </div>
+        </div>
+      </FadeContent>
+    );
+  })}
+</div></div>
             
 
             

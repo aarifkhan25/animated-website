@@ -80,9 +80,9 @@ export default function FractionalTalent({
   });
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
   const data = [
-    { name: "160+", title: "Countries", delay: 1 },
-    { name: "4.6/5", title: "Rating on G2", delay: 2 },
-    { name: "1st", title: "Product Hunt Approved", delay: 3,img:'/assets/product1.svg' },
+    { name: "160+", title: "Countries", delay: 0.5 },
+    { name: "4.6/5", title: "Rating on G2", delay: 1 },
+    { name: "1st", title: "Product Hunt Approved", delay: 1.5,img:'/assets/product1.svg' },
   ];
 
   const [visibleCards, setVisibleCards] = useState([]);
@@ -294,37 +294,48 @@ export default function FractionalTalent({
 
       <>
         {textColor === "#ff0044" ? (
-          <div className="md:px-10 lg:px-32 pb-10 -mt-40  flex flex-grow gap-1 md:gap-3 lg:gap-5 justify-center items-center">
-            {data?.map((curE, i) => {
-              return (
-                <span key={i}>
-                  <FadeContent
-                    blur={true}
-                    duration={1000}
-                    delay={curE.delay}
-                    easing="ease-out"
-                    initialOpacity={0}
-                  >
-                    <div className="md:w-[200px] lg:w-[320px] grid gap-3 h-auto rounded-xl bg-[#141414] p-3  shadow-2xl">
-                    {curE.delay !==3 ?  <h2 className="font-jb-mono text-xl md:text-2xl lg:text-5xl">
-                        {curE.name}
-                      </h2>: <Image
-                                        src={curE.img}
-                                        width={500}
-                                        height={500}
-                                        alt="1st Product"
-                                        loading="lazy"
-                                        className={` w-[110px] md:w-[200px]  `}
-                                      />}
-                   <p className={` text-sm md:text-base lg:text-lg font-mulish `}>
-                        {curE.title}
-                      </p>
-                    </div>
-                  </FadeContent>
-                </span>
-              );
-            })}
+          <div className="px-5 md:px-20 lg:px-32 -mt-40 grid grid-cols-2 md:grid-cols-3  gap-3 lg:gap-5 justify-center  md:items-stretch">
+  {data?.map((curE, i) => {
+    return (
+      <FadeContent
+        blur={true}
+        duration={1000}
+        delay={curE.delay}
+        easing="ease-out"
+        initialOpacity={0}
+        key={i}
+        className="h-full" // FadeContent ke wrapper ko full height dena zaroori hai
+      >
+        <div className="w-full h-full flex flex-col justify-center  rounded-xl bg-[#141414] p-4 md:p-6 shadow-2xl border border-white/5">
+          
+          {/* Condition for Image or Name */}
+          <div className="mb-3 flex items-center justify-start">
+            {curE.delay !== 1.5 ? (
+              <h2 className="font-jb-mono text-xl md:text-2xl lg:text-5xl text-white">
+                {curE.name}
+              </h2>
+            ) : (
+              <Image
+                src={curE.img}
+                width={500}
+                height={500}
+                alt="Product"
+                loading="lazy"
+                className="w-[80px] md:w-[130px] lg:w-[180px] object-contain"
+              />
+            )}
           </div>
+
+          {/* Title/Description */}
+          <p className="text-xs lg:text-lg font-mulish text-gray-300 leading-tight">
+            {curE.title}
+          </p>
+          
+        </div>
+      </FadeContent>
+    );
+  })}
+</div>
         ) : null}
       </>
     </>

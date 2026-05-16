@@ -38,7 +38,7 @@ const talent = [
   },
 ];
 
- const  clientInfo=[{name:"Anam",post:"co-founder & co-ceo",img:'/assets/clientImg/img.svg',video:"https://youtube.com/shorts/zxjfxrXfROc?si=WincBzNbmmDHQjfZ"},{name:"Jae",post:"founder & managing principal",img:'/assets/clientImg/img2.png',video:"https://player.vimeo.com/video/949215348"},{name:"Arianna",post:"Founder & ceo",img:'/assets/clientImg/img3.svg',video:"https://youtube.com/shorts/zxjfxrXfROc?si=WincBzNbmmDHQjfZ"}]
+ const  clientInfo=[{name:"Anam",post:"co-founder & co-ceo",img:'/assets/clientImg/img.svg',video:"https://www.youtube.com/watch?v=zxjfxrXfROc"},{name:"Jae",post:"founder & managing principal",img:'/assets/clientImg/img2.png',video:"https://vimeo.com/949215348"},{name:"Arianna",post:"Founder & ceo",img:'/assets/clientImg/img3.svg',video:"https://www.youtube.com/watch?v=zxjfxrXfROc"}]
 export default function Talent({
   textColor,
   bgColor,
@@ -250,7 +250,7 @@ export default function Talent({
               >
                 {/* --- YouTube Player Layer --- */}
                 {/* --- Video Layer --- */}
-            <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full pointer-events-none">
   <ReactPlayer
     url={curE.video}
     playing={isPlaying}
@@ -259,14 +259,17 @@ export default function Talent({
     width="100%"
     height="100%"
     playsinline
-    style={{ objectFit: 'cover' }} // Sabse important line video stretch karne ke liye
+    // style tag ko hatakar wrapper class use karein
+    className="absolute top-0 left-0"
+    onProgress={(state) => setProgress(state.played * 100)} // Progress handle karne ka sahi tarika
     config={{
       youtube: {
         playerVars: { 
           controls: 0, 
           showinfo: 0, 
           modestbranding: 1,
-          rel: 0
+          rel: 0,
+          iv_load_policy: 3
         }
       }
     }}
