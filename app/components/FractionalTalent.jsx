@@ -78,7 +78,7 @@ export default function FractionalTalent({
   const { scrollYProgress } = useScroll({
     target: targetRef,
   });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
   const data = [
     { name: "160+", title: "Countries", delay: 0.5 },
     { name: "4.6/5", title: "Rating on G2", delay: 1 },
@@ -173,13 +173,13 @@ export default function FractionalTalent({
 
       <section
         ref={targetRef}
-        className={`relative h-[200vh] ${role === "work" ? "hidden" : "block"}  -mt-10 sm:-mt-70 md:-mt-70 xl:-mt-15 2xl:-mt-50`}
+        className={`relative h-[200vh] ${role === "work" ? "hidden" : "block"}  -mt-10 md:-mt-20`}
       >
-        <div className="sticky top-0 flex md:h-screen h-[50vh] items-center overflow-hidden scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <motion.div
-            style={{ x }}
-            className="flex gap-5 md:gap-7 lg:gap-10 p-5 md:p-20 lg:p-32"
-          >
+       <div className="sticky top-0 h-screen w-full flex flex-col justify-start pt-16 md:pt-24 overflow-hidden">
+        <motion.div
+      style={{ x }}
+      className="flex gap-5 md:gap-7 lg:gap-10 px-5 py-10 md:px-20 md:py-12 lg:px-32 lg:py-16"
+    >
             {bgColor !== "#1c143d"
               ? visibleCards?.map((item, i) => (
                   <div
@@ -217,7 +217,7 @@ export default function FractionalTalent({
                           <img
                             alt={curE.name}
                             src={curE.img}
-                            className="w-11 h-11 md:w-13 md::h-13 lg:w-15 lg:h-15 rounded-xl"
+                            className="w-11 h-11 md:w-13 md:h-13 lg:w-15 lg:h-15 rounded-xl"
                           />
                         </div>
 

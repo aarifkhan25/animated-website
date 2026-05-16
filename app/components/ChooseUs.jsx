@@ -24,7 +24,7 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
 
     const [openSection, setOpenSection] = useState('quick-view');
   return (
-  <section className="w-full md:grid gap-5 md:gap-10 text-white  py-10 md:py-20 px-5 md:px-10  lg:px-38">
+  <section className="w-full md:grid gap-5 md:gap-10 text-white  py-10 md:py-20 px-10 md:px-20  lg:px-32">
         <div className="w-full mx-auto grid  justify-center items-center  ">
          
             {/* Orange Badge */}
@@ -103,98 +103,93 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
           
         </div>
       </div>: 
-      <div className="grid gap-10 "> 
-        <div className=" w-full h-[500px] flex flex-col lg:flex-row  items-cente gap-3 md:gap-5 lg:gap-10 rounded-xl bg-[#141414]  ">
-              
-              {/* Left Side: The "Mockup" Card */}
-              <div className="w-full h-full lg:w-1/2 relative aspect-[4/3] bg-[#1a1a1a] rounded-b-xl md:rounded-t-xl lg:rounded-l-xl overflow-hidden shadow-2xl order-2 md:order-1">
-                <div className="absolute inset-0 flex">
-                  {/* Image Part */}
-                  <div className="w-1/4 h-full">
-                    <img 
-                    src='/assets/story2.avif'
-                      alt="Profile" 
-                      className="h-full w-full object-cover "
-                    />
-                  </div>
-                  
-                  {/* Interface Part */}
-                  <div className="w-full h-full bg-white p-6 flex flex-col">
-                    <div className="flex justify-between items-center mb-8">
-                      <h3 className="text-base md:text-xl font-bold text-black">Interview Co-Pilot</h3>
-                      <div className="p-1 border border-black/10 rounded-md">
-                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                      </div>
-                    </div>
-      
-                    <div className="space-y-4">
-                      {sections.map((sec) => (
-                        <div key={sec.id} className="border-b border-black/5 pb-2">
-                          <button 
-                            onClick={() => setOpenSection(sec.id)}
-                            className="w-full cursor-pointer flex justify-between items-center py-2 text-left text-[10px] md:text-sm font-bold text-black"
-                          >
-                            {sec.title}
-                            <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 transition-transform ${openSection === sec.id ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                          </button>
-                          
-                          <AnimatePresence>
-                            {openSection === sec.id && (
-                              <motion.div 
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="overflow-hidden"
-                              >
-                                <p className="text-[6px] md:text-[10px] text-gray-500 mb-3 leading-relaxed">
-                                  {sec.content}
-                                </p>
-                             
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-      
-              {/* Right Side: Text Content */}
-              <div className="w-full lg:mt-[10%] lg:w-1/2 p-3 md:p-5 order-1 md:order-2">
-                <span className="bg-[#2a1205] text-[#ff4d00] text-[10px] font-jb-mono font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full border border-[#ff4d00]/20 inline-block mb-8">
-                  Every Step of Hiring
-                </span>
-                
-                <h1 className="text-3xl lg:text-5xl font-medium font-mulish font-semibold text-white mb-8 font-centra leading-tight">
-                  Hire with Clarity
-                </h1>
-                
-                <p className="text-sm lg:text-base text-white font-mulish font-semibold leading-relaxed max-w-lg">
-                  We've tuned our web-based platform to support you at <br/> every step of the way, from scheduling interviews,<br/> to sitting shotgun  for your calls, to making the next steps feel obvious.
-                </p>
-              </div>
-      
+ <div className="grid gap-6 md:gap-10 overflow-hidden"> 
+  {/* 1. h-[500px] ko h-auto kiya aur mobile par padding set ki */}
+  <div className="w-full h-auto flex flex-col lg:flex-row items-stretch gap-5 lg:gap-10 rounded-xl bg-[#141414] overflow-hidden">
+    
+    {/* Left Side: Mockup Card - Mobile par order change aur height fix */}
+    <div className="w-full lg:w-1/2 relative bg-[#1a1a1a] rounded-t-xl lg:rounded-l-xl lg:rounded-tr-none overflow-hidden shadow-2xl order-2 lg:order-1">
+      {/* Aspect ratio mobile par hata kar min-height di taaki content dikhe */}
+      <div className="flex h-full min-h-[300px] md:min-h-[400px]">
+        {/* Image Part */}
+        <div className="w-1/4 h-full flex-shrink-0">
+          <img 
+            src='/assets/story2.avif'
+            alt="Profile" 
+            className="h-full w-full object-cover"
+          />
+        </div>
+        
+        {/* Interface Part */}
+        <div className="w-full h-full bg-white p-4 md:p-6 flex flex-col overflow-y-auto">
+          <div className="flex justify-between items-center mb-4 md:mb-8">
+            <h3 className="text-sm md:text-xl font-bold text-black">Interview Co-Pilot</h3>
+            <div className="p-1 border border-black/10 rounded-md">
+               <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 items-stretch">
-  {fractionalHringData?.map((curE, i) => {
-    return (
-      <FadeContent
-        blur={true}
-        duration={1000}
-        delay={curE.delay}
-        easing="ease-out"
-        initialOpacity={0}
-        key={i}
-        // h-full ensure karta hai ki FadeContent ka wrapper poori height le
-        className="h-full"
-      >
-        <div className="w-full h-full flex gap-2 lg:gap-3 rounded-xl bg-[#141414] p-3 md:p-4 lg:p-5 shadow-2xl border border-white/5">
-          <div className="flex-shrink-0 ">
-            <span>{curE.icon}</span>
           </div>
-          
-          <div className="flex flex-col gap-1 md:gap-3">
+
+          <div className="space-y-2 md:space-y-4">
+            {sections.map((sec) => (
+              <div key={sec.id} className="border-b border-black/5 pb-2">
+                <button 
+                  onClick={() => setOpenSection(sec.id)}
+                  className="w-full cursor-pointer flex justify-between items-center py-1 md:py-2 text-left text-[9px] md:text-sm font-bold text-black"
+                >
+                  {sec.title}
+                  <svg xmlns="http://www.w3.org/2000/svg" className={`h-3 w-3 md:h-4 md:w-4 transition-transform ${openSection === sec.id ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                
+                <AnimatePresence>
+                  {openSection === sec.id && (
+                    <motion.div 
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="text-[8px] md:text-[10px] text-gray-500 mb-2 leading-relaxed">
+                        {sec.content}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Right Side: Text Content */}
+    <div className="w-full lg:w-1/2 p-5 md:p-8 flex flex-col justify-center order-1 lg:order-2">
+      <div className="mb-4">
+        <span className="bg-[#2a1205] text-[#ff4d00] text-[8px] lg:text-xs font-jb-mono font-bold uppercase tracking-[0.2em] px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-[#ff4d00]/20 inline-block">
+          Every Step of Hiring
+        </span>
+      </div>
+      
+      <h1 className="text-2xl md:text-3xl lg:text-5xl font-mulish font-bold text-white mb-4 lg:mb-8 leading-tight">
+        Hire with Clarity
+      </h1>
+      
+      <p className="text-[11px] md:text-sm lg:text-base text-gray-300 font-mulish font-medium leading-relaxed max-w-lg">
+        We've tuned our web-based platform to support you at every step of the way, from scheduling interviews, to sitting shotgun for your calls, to making the next steps feel obvious.
+      </p>
+    </div>
+  </div>
+
+  {/* Cards Grid */}
+  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 items-stretch">
+    {fractionalHringData?.map((curE, i) => (
+      <FadeContent
+        key={i}
+        blur={true}
+        className={`${i === 2 ? "col-span-2 md:col-span-1" : "col-span-1"} h-full`}
+      >
+        <div className="w-full h-full flex gap-2 md:gap-3 rounded-xl bg-[#141414] p-2 md:p-4 lg:p-5 shadow-2xl border border-white/5">
+          <div className="flex-shrink-0 text-sm md:text-base">{curE.icon}</div>
+          <div className="flex flex-col gap-1">
             <h2 className="font-mulish text-[10px] md:text-sm lg:text-base font-bold text-white leading-tight">
               {curE.title}
             </h2>
@@ -204,9 +199,9 @@ export default function ChooseUs({textColor,bgColor,title,heading,subheading}) {
           </div>
         </div>
       </FadeContent>
-    );
-  })}
-</div></div>
+    ))}
+  </div>
+</div>
             
 
             

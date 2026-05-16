@@ -53,7 +53,7 @@ export default function Talent({
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
 
   const [visibleCards, setVisibleCards] = useState([]);
   const handleResize = () => {
@@ -168,18 +168,19 @@ export default function Talent({
 
       <section
         ref={targetRef}
-        className={`${role === "client" ? "hidden" : "block"} relative h-[200vh] -mt-10 sm:-mt-70 md:-mt-50 xl:-mt-15 2xl:-mt-50`}
+        className={`${role === "client" ? "hidden" : "block"} relative h-[200vh] -mt-10 s md:-mt-20`}
       >
-        <div className="sticky top-0 flex md:h-screen h-[50vh] items-center overflow-scroll scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+     <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
           <motion.div
             style={{ x }}
             className="flex gap-5 md:gap-7 lg:gap-10 p-5 md:p-20 lg:p-32"
           >
             {visibleCards?.map((item, i) => (
-              <div
-                key={i}
-                className={`relative flex-shrink-0 w-[250px] h-[300px] md:w-[350px] md:h-[400px] lg:w-[450px] lg:h-[450px] overflow-hidden rounded-xl bg-[#141414] p-5 lg:p-8 font-sans shadow-2xl`}
-              >
+             <div
+          key={i}
+          className="relative flex-shrink-0 w-[280px] h-[400px] md:w-[450px] md:h-[450px] overflow-hidden rounded-xl bg-[#141414] p-5 lg:p-8 shadow-2xl"
+          // Mobile par h-[400px] thoda better lagega center alignment ke liye
+        >
                 <div className="absolute inset-0 z-0">
                   <Image
                     width={500}
