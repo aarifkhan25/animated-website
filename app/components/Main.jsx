@@ -9,7 +9,7 @@ import FadeContent from "@/components/FadeContent.jsx";
 
 export default function Main() {
   return (
-     <section className=" flex flex-col gap-8 sm:gap-10 lg:gap-0 items-center justify-center w-full  text-white py-10 px-4 md:px-6 md:py-5 overflow-hidden">
+     <section className=" flex flex-col h-screen gap-8 sm:gap-10 lg:gap-0 items-center justify-center w-full  text-white py-10 px-4 md:px-6 md:py-5 overflow-hidden">
             
             {/* Top Badge */}
             <AnimatedContent
@@ -25,7 +25,8 @@ export default function Main() {
               delay={3}
             >
               <div className="mt-10 md:mt-25 mb-10 md:mb-0">
-                <span className="px-4 py-1.5 rounded-full  bg-sky-500/10 text-[#009ded]  font-jb-mono   text-xs  md:text-base uppercase">
+
+                <span className="px-4 py-1.5 rounded-full  bg-sky-500/10 text-[#009ded]  font-jb-mono  text-[8px]  md:text-sm lg:text-base uppercase">
                   Build faster with fractional hiring
                 </span>
               </div>

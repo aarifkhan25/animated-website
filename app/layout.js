@@ -8,7 +8,7 @@ import { Mulish } from "next/font/google";
 import AnimatedContent from "@/components/AnimatedContent.jsx";
 import Image from "next/image";
 import { MdOutlineClose } from "react-icons/md";
-
+import Footer from '../app/components/Footer.jsx';
 const jbMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jb-mono",
@@ -41,6 +41,9 @@ const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
   }
   return (
     <html lang="en">
+      <head>
+          <link rel="icon" href="/assets/logo.svg" />
+      </head>
       <body className={`${jbMono.variable} ${mulish.variable} `}>
         {/* header */}
         <div className="h-screen w-full  font-sans antialiased text-white">
@@ -159,6 +162,7 @@ const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
 
 
           {children}
+            <Footer></Footer>
         </div>
 
 

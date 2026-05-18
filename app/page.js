@@ -9,7 +9,7 @@ import FractionalTalent from "./components/FractionalTalent.jsx";
 import ChooseUs from "./components/ChooseUs.jsx";
 import YourExpectations from "./components/YourExpectations.jsx";
 import Quesitons from "./components/Quesitons.jsx";
-import Footer from './components/Footer.jsx';
+
 export default function Home() {
   const { show, setShow } = useState(true);
 
@@ -19,6 +19,7 @@ export default function Home() {
       <Main></Main>
 
       {/* //team section */}
+      
       <Team></Team>
 
       {/* //Company section */}
@@ -187,7 +188,7 @@ export default function Home() {
         bgColor="#2a1205"
       ></YourExpectations>
 
-    <Footer></Footer>
+  
     </>
   );
 }

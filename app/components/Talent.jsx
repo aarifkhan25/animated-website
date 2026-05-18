@@ -8,7 +8,7 @@ import ReactPlayer from "react-player";
 
 import { IoPlay, IoPause, IoVolumeMedium, IoVolumeMute } from "react-icons/io5";
 import { HiOutlineChevronRight } from "react-icons/hi";
-
+import { RiArrowRightLine } from "react-icons/ri";
 import Image from "next/image";
 const talent = [
   {
@@ -38,7 +38,26 @@ const talent = [
   },
 ];
 
- const  clientInfo=[{name:"Anam",post:"co-founder & co-ceo",img:'/assets/clientImg/img.svg',video:"https://www.youtube.com/watch?v=zxjfxrXfROc"},{name:"Jae",post:"founder & managing principal",img:'/assets/clientImg/img2.png',video:"https://vimeo.com/949215348"},{name:"Arianna",post:"Founder & ceo",img:'/assets/clientImg/img3.svg',video:"https://www.youtube.com/watch?v=zxjfxrXfROc"}]
+const clientInfo = [
+  {
+    name: "Anam",
+    post: "co-founder & co-ceo",
+    img: "/assets/clientImg/img.svg",
+    video: "https://www.youtube.com/watch?v=zxjfxrXfROc",
+  },
+  {
+    name: "Jae",
+    post: "founder & managing principal",
+    img: "/assets/clientImg/img2.png",
+    video: "https://vimeo.com/949215348",
+  },
+  {
+    name: "Arianna",
+    post: "Founder & ceo",
+    img: "/assets/clientImg/img3.svg",
+    video: "https://www.youtube.com/watch?v=zxjfxrXfROc",
+  },
+];
 export default function Talent({
   textColor,
   bgColor,
@@ -53,21 +72,24 @@ export default function Talent({
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
 
+  // Aapki purani states ke niche ise add karein
   const [visibleCards, setVisibleCards] = useState([]);
+  const [isMobile, setIsMobile] = useState(false); // <-- Yeh nayi state add karein
+
   const handleResize = () => {
-    // Agar screen mobile (768px se choti) hai, toh ek card kam dikhao
     if (window.innerWidth < 768) {
-      setVisibleCards(talent?.slice(0, -1)); // Last card hata dega
+      setVisibleCards(talent?.slice(0, -1));
+      setIsMobile(true); // <-- Mobile hai toh true karein
     } else {
-      setVisibleCards(talent); // Desktop par saare cards
+      setVisibleCards(talent);
+      setIsMobile(false); // <-- Desktop hai toh false karein
     }
   };
-  useEffect(() => {
-    // Initial check
-    handleResize();
 
+  useEffect(() => {
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [talent]);
@@ -123,7 +145,7 @@ export default function Talent({
             >
               <div className="mb-8">
                 <span
-                  className={`px-4 py-1.5 rounded-full text-[8px] md:text-[12px] font-jb-mono font-bold uppercase`}
+                  className={`px-4 py-1.5 rounded-full text-[8px] md:text-xs font-jb-mono font-bold uppercase`}
                   style={{ backgroundColor: bgColor, color: textColor }}
                 >
                   {title}
@@ -166,84 +188,90 @@ export default function Talent({
         </div>
       </section>
 
-      <section
-        ref={targetRef}
-        className={`${role === "client" ? "hidden" : "block"} relative h-[200vh] -mt-10 s md:-mt-20`}
-      >
-     <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
-          <motion.div
-            style={{ x }}
-            className="flex gap-5 md:gap-7 lg:gap-10 p-5 md:p-20 lg:p-32"
-          >
-            {visibleCards?.map((item, i) => (
-             <div
+   <section
+  ref={targetRef}
+  /* 
+    Tablet range par scroll track ko poora area travel karne dene ke liye height md:h-[250vh] ki hai 
+    aur desktop par normal md:h-[200vh] apply hogi.
+  */
+  className={`${role === "client" ? "hidden" : "block"} relative h-auto md:h-[250vh] lg:h-[200vh] md:-mt-20`}
+>
+  {/* 
+    'md:overflow-hidden' track rendering glitch ko fix rakhega.
+    Yahan humne 'justify-start' use kiya hai 'justify-center' ki jagah, taaki starting point absolute edge se calculate ho.
+  */}
+  <div className="static md:sticky md:top-0 h-auto md:h-screen w-full flex flex-col justify-start md:justify-center overflow-x-auto md:overflow-hidden scrollbar-hide snap-x snap-mandatory">
+    <motion.div
+      /* 
+        Agar screen mobile hai toh animation frame object inline block empty ho jayega.
+      */
+      style={isMobile ? {} : { x }}
+      /* 
+        --- MAIN FIX ---
+        Yahan right padding 'md:pr-[30vw]' aur 'lg:pr-32' apply ki hai.
+        Yeh extra right padding tablet screen par invisible empty space create karti hai, 
+        jiski wajah se last card scroll hone par screen ke edge par chipakta nahi balki poora andar dikhta hai.
+      */
+      className="flex gap-5 md:gap-7 lg:gap-10 p-5 md:pt-28 md:pb-20 md:pl-20 md:pr-[30vw] lg:p-32"
+    >
+      {visibleCards?.map((item, i) => (
+        <div
           key={i}
-          className="relative flex-shrink-0 w-[280px] h-[400px] md:w-[450px] md:h-[450px] overflow-hidden rounded-xl bg-[#141414] p-5 lg:p-8 shadow-2xl"
-          // Mobile par h-[400px] thoda better lagega center alignment ke liye
+          /* 
+            Tablet range par browser behavior lock na ho isliye 'md:snap-none' rakha hai 
+            taaki framer motion ka core pixel track smooth travel kare.
+          */
+          className="relative flex-shrink-0 w-[280px] h-[400px] md:w-[420px] md:h-[450px] lg:w-[450px] lg:h-[450px] overflow-hidden rounded-xl bg-[#141414] p-5 lg:p-8 shadow-2xl snap-center md:snap-none"
         >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    width={500}
-                    height={500}
-                    src={item.img}
-                    className="h-full w-full object-cover opacity-20 grayscale"
-                    alt={item.name}
-                  />
-                  <div className="absolute inset-0 bg-[radial-gradient(#2a2a2a_1px,transparent_1px)] [background-size:4px_4px] opacity-40"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent"></div>
-                </div>
+          <div className="absolute inset-0 z-0">
+            <Image
+              width={500}
+              height={500}
+              src={item.img}
+              className="h-full w-full object-cover opacity-20 grayscale"
+              alt={item.name}
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(#2a2a2a_1px,transparent_1px)] [background-size:4px_4px] opacity-40"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent"></div>
+          </div>
 
-                {/* --- Content Layer --- */}
-                <div className="relative z-10 flex h-full flex-col justify-end">
-                  <div className="mb-auto">
-                    <span
-                      className={`rounded-full  px-3 py-1 text-[8px] md:text-[10px] font-jb-mono uppercase tracking-wider `}
-                      style={{ backgroundColor: bgColor, color: textColor }}
-                    >
-                      {item.title}
-                    </span>
-                  </div>
+          {/* --- Content Layer --- */}
+          <div className="relative z-10 flex h-full flex-col justify-end">
+            <div className="mb-auto">
+              <span
+                className="rounded-full px-3 py-1 text-[8px] md:text-[10px] font-jb-mono uppercase tracking-wider"
+                style={{ backgroundColor: bgColor, color: textColor }}
+              >
+                {item.title}
+              </span>
+            </div>
 
-                  <h2 className=" mb-1 md:mb-3 lg:mb-4 text-2xl md:text-3xl lg:text-4xl font-mulish text-white">
-                    {item.name}
-                  </h2>
+            <h2 className="mb-1 md:mb-3 lg:mb-4 text-2xl md:text-3xl lg:text-4xl font-mulish text-white">
+              {item.name}
+            </h2>
 
-                  <p className="mb-2 md:mb-5 lg:mb-8 text-xs md:text-base lg:text-lg font-mulish md:leading-relaxed text-white">
-                    {item.des}
-                  </p>
+            <p className="mb-2 md:mb-5 lg:mb-8 text-xs md:text-base lg:text-lg font-mulish md:leading-relaxed text-white">
+              {item.des}
+            </p>
 
-                  <button
-                    className={`group flex w-fit items-center gap-1 md:gap-2 text-[10px] md:text-base lg:text-lg rounded-full px-3 md:px-4 lg:px-6 py-1  md:py-2 lg:py-3 font-mulish font-bold text-black transition-transform hover:scale-105 active:scale-95`}
-                    style={{ backgroundColor: textColor }}
-                  >
-                    Learn More
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2.5}
-                      stroke="currentColor"
-                      className="h-2 md:h-5 w-3 md:w-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </motion.div>
+            <button
+              className="group flex w-fit items-center gap-1 md:gap-2 text-[10px] md:text-base lg:text-lg rounded-full px-3 md:px-4 lg:px-6 py-1 md:py-2 lg:py-3 font-mulish font-bold text-black transition-transform hover:scale-105 active:scale-95"
+              style={{ backgroundColor: textColor }}
+            >
+              Learn More
+              <FiChevronRight className="h-3 w-3 md:h-5 md:w-5 stroke-[2.5]" />
+            </button>
+          </div>
         </div>
-      </section>
+      ))}
+    </motion.div>
+  </div>
+</section>
+      {/* Yahan tak ka poora chunk replace karna hai */}
 
-      <section
-        className={`${role === "client" ? "block" : "hidden"} w-full overflow-x-auto scrollbar-hide`}
-      >
+      <section className={`${role === "client" ? "block" : "hidden"} w-full`}>
         <div className="pb-30 md:pb-50">
-          <div className="flex gap-5 md:gap-7 lg:gap-10 p-5 md:p-20 lg:p-32 pl-62">
+          <div className="flex gap-5 md:gap-7 lg:gap-10 px-5 md:px-20 lg:px-32  overflow-x-auto  scrollbar-style scrollbar-hide">
             {clientInfo?.map((curE, i) => (
               <div
                 key={i}
@@ -251,31 +279,31 @@ export default function Talent({
               >
                 {/* --- YouTube Player Layer --- */}
                 {/* --- Video Layer --- */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
-  <ReactPlayer
-    url={curE.video}
-    playing={isPlaying}
-    muted={isMuted}
-    loop={true}
-    width="100%"
-    height="100%"
-    playsinline
-    // style tag ko hatakar wrapper class use karein
-    className="absolute top-0 left-0"
-    onProgress={(state) => setProgress(state.played * 100)} // Progress handle karne ka sahi tarika
-    config={{
-      youtube: {
-        playerVars: { 
-          controls: 0, 
-          showinfo: 0, 
-          modestbranding: 1,
-          rel: 0,
-          iv_load_policy: 3
-        }
-      }
-    }}
-  />
-</div>
+                <div className="absolute inset-0 w-full h-full pointer-events-none">
+                  <ReactPlayer
+                    url={curE.video}
+                    playing={isPlaying}
+                    muted={isMuted}
+                    loop={true}
+                    width="100%"
+                    height="100%"
+                    playsinline
+                    // style tag ko hatakar wrapper class use karein
+                    className="absolute top-0 left-0"
+                    onProgress={(state) => setProgress(state.played * 100)} // Progress handle karne ka sahi tarika
+                    config={{
+                      youtube: {
+                        playerVars: {
+                          controls: 0,
+                          showinfo: 0,
+                          modestbranding: 1,
+                          rel: 0,
+                          iv_load_policy: 3,
+                        },
+                      },
+                    }}
+                  />
+                </div>
                 {/* Overlay to catch clicks and manage gradients */}
                 <div className="absolute inset-0 z-10 cursor-pointer bg-gradient-to-b from-black/50 via-transparent to-black/70"></div>
 

@@ -6,9 +6,10 @@ import AnimatedContent from "@/components/AnimatedContent.jsx";
 import FadeContent from "@/components/FadeContent";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Image from "next/image";
+
 const talent = [
   {
-    title: "  Fractional designers",
+    title: " Fractional designers",
     title1: "step 1",
     name: "Design",
     des: "The graphic, UI/UX, and content designers you need to differentiate your company",
@@ -19,7 +20,6 @@ const talent = [
     name: "Oprations",
     des: "Project + Product Managers to keep your team running smoothly",
   },
-
   {
     title: " Fractional devs",
     title1: "step 3",
@@ -33,6 +33,7 @@ const talent = [
     des: "From GTM Strategy, to Growth Management, to Social Media Management",
   },
 ];
+
 const sections = [
   {
     title: "Top fractional design roles",
@@ -65,6 +66,13 @@ const sections = [
     roles: ["Web Developer"],
   },
 ];
+
+const data = [
+  { name: "160+", title: "Countries", delay: 0.5 },
+  { name: "4.6/5", title: "Rating on G2", delay: 1 },
+  { name: "1st", title: "Product Hunt Approved", delay: 1.5, img: '/assets/product1.svg' },
+];
+
 export default function FractionalTalent({
   textColor,
   bgColor,
@@ -74,33 +82,46 @@ export default function FractionalTalent({
   role,
 }) {
   const targetRef = useRef(null);
-  // 1. Vertical Scroll track
+  
+  // 1. Scroll tracking Setup
   const { scrollYProgress } = useScroll({
     target: targetRef,
   });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
-  const data = [
-    { name: "160+", title: "Countries", delay: 0.5 },
-    { name: "4.6/5", title: "Rating on G2", delay: 1 },
-    { name: "1st", title: "Product Hunt Approved", delay: 1.5,img:'/assets/product1.svg' },
-  ];
 
-  const [visibleCards, setVisibleCards] = useState([]);
-  const handleResize = () => {
-    // Agar screen mobile (768px se choti) hai, toh ek card kam dikhao
-    if (window.innerWidth < 768) {
-      setVisibleCards(talent?.slice(0, -1)); // Last card hata dega
-    } else {
-      setVisibleCards(talent); // Desktop par saare cards
-    }
-  };
+  const [visibleCards, setVisibleCards] = useState(talent);
+  const [isMobileOnly, setIsMobileOnly] = useState(false);
+  const [transformXValue, setTransformXValue] = useState("-65%"); // Dynamic state for tablet vs desktop
+
+  // 2. Dynamic Scroll and Breakpoint Handler
   useEffect(() => {
-    // Initial check
-    handleResize();
+    const handleResize = () => {
+      const width = window.innerWidth;
+      
+      if (width < 768) {
+        // Pure Mobile
+        setVisibleCards(talent?.slice(0, -1));
+        setIsMobileOnly(true);
+      } else if (width >= 768 && width < 1025) {
+        // TABLET range (iPad mini, Air, Pro)
+        setVisibleCards(talent);
+        setIsMobileOnly(false);
+        setTransformXValue("-110%"); // Tablet par zyada slide space chahiye hota hai taaki saare cards cross ho sakein
+      } else {
+        // Desktop / Large Screens
+        setVisibleCards(talent);
+        setIsMobileOnly(false);
+        setTransformXValue("-60%"); // Desktop wide layout ke liye perfectly balanced space
+      }
+    };
 
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [talent]);
+  }, []);
+
+  // useTransform ko dynamic value de di taaki freeze na ho
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", transformXValue]);
+
   const comptition = [
     { img: "/assets/comperision/img1.png", name: "Upwork" },
     { img: "/assets/comperision/img2.png", name: "Toptal" },
@@ -108,13 +129,12 @@ export default function FractionalTalent({
     { img: "/assets/comperision/img4.jpg", name: "Braintrust" },
     { img: "/assets/comperision/img5.png", name: "Fivver" },
   ];
+
   return (
     <>
-      <section className="w-full  text-white py-0 px-10 md:px-20 lg:px-32">
-        <div className="w-full mx-auto flex flex-col justify-between  gap-10">
-          {/* Left Content */}
+      <section className="w-full text-white py-0 px-10 md:px-20 lg:px-32">
+        <div className="w-full mx-auto flex flex-col justify-between gap-10">
           <div className="flex-1">
-            {/* Orange Badge */}
             <AnimatedContent
               distance={20}
               direction="horizontal"
@@ -129,7 +149,7 @@ export default function FractionalTalent({
             >
               <div className="mb-8">
                 <span
-                  className="px-4 py-1.5 rounded-full    text-[8px] md:text-[12px] font-jb-mono font-semibold uppercase"
+                  className="px-4 py-1.5 rounded-full text-[8px] md:text-[12px] font-jb-mono font-semibold uppercase"
                   style={{ backgroundColor: bgColor, color: textColor }}
                 >
                   {title}
@@ -137,18 +157,15 @@ export default function FractionalTalent({
               </div>
             </AnimatedContent>
 
-            {/* Heading */}
             <ScrollReveal
               baseOpacity={0.1}
               enableBlur
               blurStrength={1}
               baseRotation={0}
             >
-              {" "}
               <h2 className="text-3xl md:text-[65px] lg:text-[72px] font-mulish leading-[1] tracking-tight mb-12">
                 {heading}
               </h2>
-              {/* Subtext */}
               <div className="grid md:flex justify-between gap-5 items-center">
                 <div>
                   <p className="max-w-xl text-white text-xs md:text-sm lg:text-base font-mulish leading-relaxed">
@@ -156,7 +173,7 @@ export default function FractionalTalent({
                   </p>
                 </div>
                 <div>
-                  <div className="flex  gap-4 ">
+                  <div className="flex gap-4">
                     <button className="w-8 md:w-13 h-8 md:h-13 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-500 hover:bg-white/10 transition-colors">
                       <FiChevronLeft className="md:w-8 md:h-8" />
                     </button>
@@ -171,173 +188,167 @@ export default function FractionalTalent({
         </div>
       </section>
 
-      <section
-        ref={targetRef}
-        className={`relative h-[200vh] ${role === "work" ? "hidden" : "block"}  -mt-10 md:-mt-20`}
+      {/* 
+        Yahan tablet par extra scroll space dene ke liye md:h-[250vh] kiya hai, 
+        taaki jab tak track poora end tak na jaye cards freeze na ho.
+      */}
+  <section className="relative">
+  {/* MAIN SCROLL TARGET TRACK */}
+  <div
+    ref={targetRef}
+    className={`relative ${
+      textColor === "#ff0044" 
+        ? "h-auto md:h-[180vh] lg:h-[160vh]" 
+        : "h-auto md:h-[230vh] lg:h-[200vh]"
+    } ${role === "work" ? "hidden" : "block"} -mt-10 md:-mt-20`}
+  >
+    {/* STICKY CONTAINER FOR HORIZONTAL CARDS */}
+    <div className="static md:sticky md:top-0 h-auto md:h-[80vh] w-full flex flex-col justify-start pt-16 md:pt-20 overflow-x-auto md:overflow-hidden scrollbar-hide">
+      <motion.div
+        style={isMobileOnly ? {} : { x }}
+        className="flex gap-5 md:gap-7 lg:gap-10 px-5 py-10 md:px-20 md:py-12 lg:px-32 lg:py-16"
       >
-       <div className="sticky top-0 h-screen w-full flex flex-col justify-start pt-16 md:pt-24 overflow-hidden">
-        <motion.div
-      style={{ x }}
-      className="flex gap-5 md:gap-7 lg:gap-10 px-5 py-10 md:px-20 md:py-12 lg:px-32 lg:py-16 "
-    >
-            {bgColor !== "#1c143d"
-              ? visibleCards?.map((item, i) => (
-                  <div
-                    key={i}
-                    className="relative flex-shrink-0 w-[240px] h-[180px] md:w-[350px] md:h-[200px] lg:w-[450px] lg:h-[250px] overflow-hidden rounded-xl bg-[#141414] p-3 lg:p-5 font-sans shadow-2xl"
-                  >
-                    <div className=" grid h-full gap-5 lg:gap-10  justify-between">
-                      <div className="">
-                        <span
-                          className=" text-[8px] md:text-xs font-jb-mono font-semibold uppercase tracking-wider "
-                          style={{ color: textColor }}
-                        >
-                          {textColor === "#009ded" ? item.title : item.title1}
-                        </span>
-                      </div>
-
-                      <h2 className="  text-xl md:text-2xl lg:text-3xl font-mulish font-bold text-white">
-                        {item.name}
-                      </h2>
-
-                      <p className="flex text-xs md:text-sm lg:text-base  font-mulish font-medium text-white">
-                        {item.des}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              : comptition?.map((curE, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className="relative flex-shrink-0 w-[240px] h-[180px] md:w-[330px] md:h-[200px] lg:w-[430px] lg:h-[250px] overflow-hidden rounded-xl bg-[#141414] p-3 lg:p-5 font-sans shadow-2xl"
+        {bgColor !== "#1c143d"
+          ? visibleCards?.map((item, i) => (
+              <div
+                key={i}
+                className="relative flex-shrink-0 w-[240px] h-[180px] md:w-[350px] md:h-[200px] lg:w-[450px] lg:h-[250px] overflow-hidden rounded-xl bg-[#141414] p-3 lg:p-5 font-sans shadow-2xl snap-center md:snap-none"
+              >
+                <div className="grid h-full gap-5 lg:gap-10 justify-between">
+                  <div>
+                    <span
+                      className="text-[8px] md:text-xs font-jb-mono font-semibold uppercase tracking-wider"
+                      style={{ color: textColor }}
                     >
-                      <div className=" grid h-full gap-5 lg:gap-10  justify-between">
-                        <div>
-                          <img
-                            alt={curE.name}
-                            src={curE.img}
-                            className="w-11 h-11 md:w-13 md:h-13 lg:w-15 lg:h-15 rounded-xl"
-                          />
-                        </div>
+                      {textColor === "#009ded" ? item.title : item.title1}
+                    </span>
+                  </div>
 
-                        <h2 className="  text-lg md:text-2xl lg:text-3xl font-mulish  text-white">
-                          Pangeya vs {curE.name}
-                        </h2>
+                  <h2 className="text-xl md:text-2xl lg:text-3xl font-mulish font-bold text-white">
+                    {item.name}
+                  </h2>
 
-                        <button
-                          className={`group flex w-fit items-center gap-1 md:gap-2 text-[10px] md:text-sm lg:text-base rounded-full px-1 md:px-2 lg:px-4  py-  md:py-1 lg:py-2 font-mulish font-bold text-black transition-transform hover:scale-105 active:scale-95`}
-                          style={{ backgroundColor: textColor }}
-                        >
-                          Compare
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2.5}
-                            stroke="currentColor"
-                            className="h-2 md:h-5 w-3 md:w-5"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                            />
-                          </svg>
-                        </button>
-                      </div>
+                  <p className="flex text-xs md:text-sm lg:text-base font-mulish font-medium text-white">
+                    {item.des}
+                  </p>
+                </div>
+              </div>
+            ))
+          : comptition?.map((curE, i) => {
+              return (
+                <div
+                  key={i}
+                  className="relative flex-shrink-0 w-[240px] h-[180px] md:w-[330px] md:h-[200px] lg:w-[430px] lg:h-[250px] overflow-hidden rounded-xl bg-[#141414] p-3 lg:p-5 font-sans shadow-2xl snap-center md:snap-none"
+                >
+                  <div className="grid h-full gap-5 lg:gap-10 justify-between">
+                    <div>
+                      <img
+                        alt={curE.name}
+                        src={curE.img}
+                        className="w-11 h-11 md:w-13 md:h-13 lg:w-15 lg:h-15 rounded-xl"
+                      />
                     </div>
-                  );
-                })}
-          </motion.div>
-        </div>
-      </section>
 
-      <div className="px-10 lg:px-32">
-        {" "}
+                    <h2 className="text-lg md:text-2xl lg:text-3xl font-mulish text-white">
+                      Pangeya vs {curE.name}
+                    </h2>
+
+                    <button
+                      className="group flex w-fit items-center gap-1 md:gap-2 text-[10px] md:text-sm lg:text-base rounded-full px-2 md:px-3 lg:px-5 py-1 md:py-1.5 lg:py-2 font-mulish font-bold text-black transition-transform hover:scale-105 active:scale-95"
+                      style={{ backgroundColor: textColor }}
+                    >
+                      Compare
+                      <FiChevronRight className="h-3 w-3 md:h-5 md:w-5 stroke-[2.5]" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+      </motion.div>
+    </div> {/* <-- Sticky Div standard close */}
+  </div> {/* <-- TargetRef Scroll Track standard close */}
+
+  {/* 
+    FIX: DATA GRID SECTIONS KO HORIZONTAL TRACK SE BAHAR NIKAL DIYA HAI.
+    Ab ye grid pure DOM layout ke normal behavior me aayegi, jisse cards poore aur perfect display honge.
+  */}
+  <>
+    {textColor === "#ff0044" ? (
+      <div className="relative z-20 pb-10 px-5 md:px-20 lg:px-32   grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 justify-center items-stretch">
+        {data?.map((curE, i) => {
+          return (
+            <FadeContent
+              blur={true}
+              duration={1000}
+              delay={curE.delay}
+              easing="ease-out"
+              initialOpacity={0}
+              key={i}
+              className="h-full flex"
+            >
+              <div className="w-full flex-1 flex flex-col justify-center rounded-xl bg-[#141414] p-4 md:p-5 lg:p-6 shadow-2xl border border-white/5">
+                <div className="mb-2 md:mb-3 flex items-center justify-start">
+                  {curE.delay !== 1.5 ? (
+                    <h2 className="font-jb-mono text-lg md:text-2xl lg:text-5xl font-bold text-white">
+                      {curE.name}
+                    </h2>
+                  ) : (
+                    <Image
+                      src={curE.img}
+                      width={500}
+                      height={500}
+                      alt="Product"
+                      loading="lazy"
+                      className="w-[70px] md:w-[130px] lg:w-[180px] object-contain"
+                    />
+                  )}
+                </div>
+                <p className="text-[10px] md:text-sm lg:text-lg font-mulish text-gray-300 leading-tight">
+                  {curE.title}
+                </p>
+              </div>
+            </FadeContent>
+          );
+        })}
+      </div>
+    ) : null}
+  </>
+</section>
+
+      <div className={`px-10 lg:px-32`}>
         <div
           className={`${role === "work" ? "block" : "hidden"} grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-10 w-full mx-auto`}
         >
           {sections.map((section, index) => (
-              <FadeContent
-                    blur={true}
-                    duration={1000}
-                    delay={0.5}
-                    easing="ease-out"
-                    initialOpacity={0}
-                     key={index}
-                  >
-            <div
-             
-              className="bg-[#141414] rounded-xl p-8 lg:p-12 border border-white/5 flex flex-col h-full"
+            <FadeContent
+              blur={true}
+              duration={1000}
+              delay={0.5}
+              easing="ease-out"
+              initialOpacity={0}
+              key={index}
             >
-              {/* Title from image_46fc63.png */}
-              <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-mulish font-semibold leading-[1.2] mb-3 md:mb-5 lg:mb-10 max-w-[90%]">
-                {section.title}
-              </h2>
-
-              {/* Roles List */}
-              <ul className="space-y-1 md:space-y-2 lg:space-y-4">
-                {section.roles.map((role, idx) => (
-                  <li
-                    key={idx}
-                    className="text-[#f5f5f5] cursor-pointer  font-mulish text-xs  md:text-base lg:text-lg font-medium opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
-                  >
-                    {role}
-                  </li>
-                ))}
-              </ul>
-            </div></FadeContent>
+              <div className="bg-[#141414] rounded-xl p-8 lg:p-12 border border-white/5 flex flex-col h-full">
+                <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-mulish font-semibold leading-[1.2] mb-3 md:mb-5 lg:mb-10 max-w-[90%]">
+                  {section.title}
+                </h2>
+                <ul className="space-y-1 md:space-y-2 lg:space-y-4">
+                  {section.roles.map((role, idx) => (
+                    <li
+                      key={idx}
+                      className="text-[#f5f5f5] font-mulish text-xs md:text-base lg:text-lg font-medium opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
+                    >
+                      {role}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </FadeContent>
           ))}
         </div>
       </div>
 
-      <>
-        {textColor === "#ff0044" ? (
-          <div className="px-5 md:px-20 lg:px-32 -mt-40 grid grid-cols-2 md:grid-cols-3  gap-3 lg:gap-5 justify-center  md:items-stretch">
-  {data?.map((curE, i) => {
-    return (
-      <FadeContent
-        blur={true}
-        duration={1000}
-        delay={curE.delay}
-        easing="ease-out"
-        initialOpacity={0}
-        key={i}
-        className="h-full" // FadeContent ke wrapper ko full height dena zaroori hai
-      >
-        <div className="w-full h-full flex flex-col justify-center  rounded-xl bg-[#141414] p-4 md:p-6 shadow-2xl border border-white/5">
-          
-          {/* Condition for Image or Name */}
-          <div className="mb-3 flex items-center justify-start">
-            {curE.delay !== 1.5 ? (
-              <h2 className="font-jb-mono text-xl md:text-2xl lg:text-5xl text-white">
-                {curE.name}
-              </h2>
-            ) : (
-              <Image
-                src={curE.img}
-                width={500}
-                height={500}
-                alt="Product"
-                loading="lazy"
-                className="w-[80px] md:w-[130px] lg:w-[180px] object-contain"
-              />
-            )}
-          </div>
-
-          {/* Title/Description */}
-          <p className="text-xs lg:text-lg font-mulish text-gray-300 leading-tight">
-            {curE.title}
-          </p>
-          
-        </div>
-      </FadeContent>
-    );
-  })}
-</div>
-        ) : null}
-      </>
+     
     </>
   );
 }
