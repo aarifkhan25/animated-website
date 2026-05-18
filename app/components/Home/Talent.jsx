@@ -67,6 +67,7 @@ export default function Talent({
   role,
 }) {
   const targetRef = useRef(null);
+    const horizontalScrollRef = useRef(null);
   // 1. Vertical Scroll track
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -77,7 +78,7 @@ export default function Talent({
   // Aapki purani states ke niche ise add karein
   const [visibleCards, setVisibleCards] = useState([]);
   const [isMobile, setIsMobile] = useState(false); // <-- Yeh nayi state add karein
-
+const [isMobileOnly, setIsMobileOnly] = useState(false);
   const handleResize = () => {
     if (window.innerWidth < 768) {
       setVisibleCards(talent?.slice(0, -1));
@@ -124,6 +125,24 @@ export default function Talent({
     setProgress((currentTime / duration) * 100);
   };
 
+  const scrollHorizontal = (direction) => {
+  if (isMobileOnly) {
+    if (horizontalScrollRef.current) {
+      const { scrollLeft, clientWidth } = horizontalScrollRef.current;
+      const scrollAmount = clientWidth * 0.75;
+      horizontalScrollRef.current.scrollTo({
+        left: direction === "left" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  } else {
+    const scrollDistance = window.innerHeight * 0.5;
+    window.scrollBy({
+      top: direction === "left" ? -scrollDistance : scrollDistance,
+      behavior: "smooth",
+    });
+  }
+};
   return (
     <>
       <section className="w-full  text-white pt-10 md:pt-30 px-10 md:px-20 lg:px-32">
@@ -174,12 +193,20 @@ export default function Talent({
 
                 <div>
                   <div className="flex  gap-4 ">
-                    <button className="w-8 md:w-13 h-8 md:h-13 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-500 hover:bg-white/10 transition-colors">
-                      <FiChevronLeft className="md:w-8 md:h-8" />
-                    </button>
-                    <button className="w-8 md:w-13 h-8 md:h-13 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
-                      <FiChevronRight className="md:w-8 md:h-8" />
-                    </button>
+                  <button 
+                    onClick={() => scrollHorizontal("left")} // <-- YEH LINE ADD KAREIN
+                    className="w-8 md:w-13 h-8 md:h-13 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white hover:bg-white/10 active:scale-95 transition-all"
+                  >
+                    <FiChevronLeft className="md:w-8 md:h-8" />
+                  </button>
+                  
+                  {/* RIGHT BUTTON */}
+                  <button 
+                    onClick={() => scrollHorizontal("right")} // <-- YEH LINE ADD KAREIN
+                    className="w-8 md:w-13 h-8 md:h-13 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white hover:bg-white/10 active:scale-95 transition-all"
+                  >
+                    <FiChevronRight className="md:w-8 md:h-8" />
+                  </button>
                   </div>
                 </div>
               </div>
@@ -200,7 +227,10 @@ export default function Talent({
     'md:overflow-hidden' track rendering glitch ko fix rakhega.
     Yahan humne 'justify-start' use kiya hai 'justify-center' ki jagah, taaki starting point absolute edge se calculate ho.
   */}
-  <div className="static md:sticky md:top-0 h-auto md:h-screen w-full flex flex-col justify-start md:justify-center overflow-x-auto md:overflow-hidden scrollbar-hide snap-x snap-mandatory">
+  <div 
+    ref={horizontalScrollRef}
+    className="static md:sticky md:top-0 h-auto md:h-screen w-full flex flex-col justify-start md:justify-center overflow-x-auto md:overflow-hidden scrollbar-hide snap-x snap-mandatory"
+  >
     <motion.div
       /* 
         Agar screen mobile hai toh animation frame object inline block empty ho jayega.

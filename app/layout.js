@@ -9,6 +9,7 @@ import AnimatedContent from "@/components/AnimatedContent.jsx";
 import Image from "next/image";
 import { MdOutlineClose } from "react-icons/md";
 import Footer from '../app/components/Footer.jsx';
+import Link from 'next/link'
 const jbMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jb-mono",
@@ -17,7 +18,7 @@ const mulish = Mulish({
   subsets: ["latin"],
   variable: "--font-mulish",
 });
-const nav = ["Hire", "For Talent", "About", "Resources"];
+const nav = [{name: "Hire",href:'/'}, {name: "For Talent",href:'/forTalent'}, {name: "About",href:'/about'}, {name: "Resources",href:'/resources'}];
 export default function RootLayout({ children }) {
   const [isScrolled, setIsScrolled] = useState(false);
 const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
@@ -56,16 +57,13 @@ const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
             <div
               className={` sm:text-base flex items-center gap-5 lg:gap-10 transition-colors ${isScrolled ? "text-white" : "text-white/90"}`}
             >
-              <a
-                href="#"
-               
-              >
+              <Link href="#">
                 <Image width={500} height={500} src="/assets/logo.svg" alt="logo" loading='lazy' className="hover:opacity-80 cursor-pointer w-8 h-8 lg:w-11 lg:h-11 " />
-              </a>
+              </Link>
 
               {nav?.map((item, i) => {
                 return (
-                  <a
+                  <Link href={item.href}
                     key={i}
                     className="hidden sm:block hover:opacity-80 cursor-pointer md:text-sm  lg:text-base font-mulish font-semibold "
                   >
@@ -88,10 +86,10 @@ const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
                         initialOpacity={0}
                         delay={3}
                       >
-                        {item}
+                        {item.name}
                       </FadeContent>
                     </AnimatedContent>{" "}
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -119,18 +117,18 @@ const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
                             <div className="flex justify-center gap-3 lg:gap-8">
 
 
-                  <a
+                  <Link
                     href="#courses"
                     className="bg-[#1a1a1a] hover:bg-[#242323] cursor-pointer text-white font-bold  px-4 py-1 pb-3 rounded-full text-sm lg:text-base transition duration-150"
                   >
                     Sign In
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="#courses"
                     className="hidden sm:flex bg-[#ffffff] hover:bg-white cursor-pointer text-black font-bold  px-4 py-1 pb-3 rounded-full text-base transition duration-150"
                   >
                     Start Hiring Talents
-                  </a>
+                  </Link>
 
                     </div>
                     </FadeContent></AnimatedContent>
@@ -149,14 +147,26 @@ const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
 
 
 
-  <div className={`sm:hidden  h-screen bg-black/70 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
+  <div className={`sm:hidden  h-screen bg-black/70 backdrop-blur-[4px] transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
+     <AnimatedContent
+                      distance={20}
+                      direction="vertical"
+                      reverse
+                      duration={1.5}
+                      ease="power3.out"
+                      initialOpacity={0}
+                      animateOpacity
+                      scale={1}
+                      threshold={0.2}
+                      delay={1}
+                    >
 <div className="grid mt-15 cursor-pointer">
  {
   nav?.map((item,i)=>{
-    return(<a key={i} className="p-3 hover:opacity-80 text-white w-full text-sm font-mulish hover:bg[#333333]">{item}</a>)
+    return(<Link key={i} href={item.href} className="p-3 hover:opacity-80 text-white w-full text-sm font-mulish hover:bg[#333333]">{item.name}</Link>)
   })
  }
-</div>
+</div></AnimatedContent>
 
   </div>
 

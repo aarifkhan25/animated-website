@@ -1,7 +1,7 @@
 
 "use client"
 import { GoArrowRight } from "react-icons/go";
-import SplitText from "@/components/SplitText.jsx";
+
 import AnimatedContent from "@/components/AnimatedContent.jsx";
 import FadeContent from "@/components/FadeContent.jsx";
 

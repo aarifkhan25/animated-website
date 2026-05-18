@@ -1,14 +1,14 @@
 "use client";
 import { useState, useRef } from "react";
-import Main from "./components/Main.jsx";
-import Team from "./components/Team.jsx";
-import Company from "./components/Company.jsx";
-import Talent from "./components/Talent.jsx";
-import StartHiring from "./components/StartHiring.jsx";
-import FractionalTalent from "./components/FractionalTalent.jsx";
-import ChooseUs from "./components/ChooseUs.jsx";
-import YourExpectations from "./components/YourExpectations.jsx";
-import Quesitons from "./components/Quesitons.jsx";
+import Main from "./components/Home/Main.jsx";
+import Team from "./components/Home/Team.jsx";
+import Company from "./components/Home/Company.jsx";
+import Talent from "./components/Home/Talent.jsx";
+import StartHiring from "./components/Home/StartHiring.jsx";
+import FractionalTalent from "./components/Home/FractionalTalent.jsx";
+import ChooseUs from "./components/Home/ChooseUs.jsx";
+import YourExpectations from "./components/Home/YourExpectations.jsx";
+import Quesitons from "./components/Home/Quesitons.jsx";
 
 export default function Home() {
   const { show, setShow } = useState(true);
